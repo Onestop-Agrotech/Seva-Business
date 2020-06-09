@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sevaBusiness/Signin.dart';
-import 'package:sevaBusiness/test.dart';
+import 'package:sevaBusiness/screens/Signin.dart';
 
 void main() => runApp(MyApp());
 

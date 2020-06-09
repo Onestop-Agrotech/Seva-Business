@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:sevaBusiness/greenBg.dart';
-import 'package:sevaBusiness/products.dart';
+import 'package:sevaBusiness/graphics/greenBg.dart';
 
 class Test extends StatefulWidget {
   Test({Key key, this.title}) : super(key: key);
