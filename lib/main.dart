@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/screens/Signin.dart';
+import 'package:sevaBusiness/screens/products.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xFFD8ECF1),
         scaffoldBackgroundColor: Color(0xFFF3F5F7),
       ),
-      home: Signin(),
-    );
+   initialRoute: '/',
+        routes: {
+          '/': (context) => Signin(),
+          '/products': (context) => Products(),
+        },
+            );
   }
 }
