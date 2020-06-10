@@ -98,6 +98,7 @@ class _SigninState extends State<Signin> {
                       autofocus: false,
                       focusNode: _mobileFocus,
                       keyboardType: TextInputType.number,
+                            controller: _mobileController,
 
                       validator: (String val) {
                         if (val.isEmpty) return 'MObile  cannot be empty';
