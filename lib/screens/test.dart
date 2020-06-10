@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
 
 class Test extends StatefulWidget {
@@ -100,6 +98,73 @@ class _TestState extends State<Test> {
                     // color: Colors.white,
                     borderRadius: BorderRadius.circular(15.0),
                     border: Border.all(color: Colors.grey)),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        width: 100,
+                        child: Image.asset('assets/image/orange.png')),
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "Musambi",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, top: 5),
+                          child: Text(
+                            "Local",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          "Rs 200",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          "1 kg",
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Container(
+                      height: 32,
+                      width: 80,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          border: Border.all(color: Colors.grey)),
+                      child: RaisedButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Test(
+                                  // destination: destination,
+                                  ),
+                            ),
+                          );
+                        },
+                        child: const Text('Edit',
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Container(
                 height: 250.0,

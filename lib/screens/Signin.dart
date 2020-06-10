@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
+import 'package:sevaBusiness/screens/products.dart';
 import 'package:sevaBusiness/screens/test.dart';
 
 class Signin extends StatefulWidget {
@@ -148,7 +149,7 @@ class _SigninState extends State<Signin> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => Test(
+                                builder: (_) => Products(
                                     // destination: destination,
                                     ),
                               ),
@@ -157,7 +158,8 @@ class _SigninState extends State<Signin> {
                           child: const Text('Sign IN',
                               style:
                                   TextStyle(fontSize: 20, color: Colors.white)),
-                        )),
+                        )
+                        ),
                       ),
                   ],
                 )
