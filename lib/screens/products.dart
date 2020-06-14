@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
+import 'package:sevaBusiness/models/shopsModel.dart';
 import 'package:sevaBusiness/screens/test.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Products extends StatefulWidget {
   Products({Key key, this.title}) : super(key: key);
@@ -13,8 +17,29 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   bool showOTPField = false;
-
+  bool _data;
   @override
+  void initState() {
+    super.initState();
+    _data = true;
+    _getOrderOfUser();
+  }
+
+  _getOrderOfUser() async {
+    String url = APIService.getStoreAPI;
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      // print("worked");
+      return json.decode(response.body);
+    } else if (response.statusCode == 404) {
+      // no orders
+      setState(() {
+        _data = false;
+      });
+    } else
+      throw Exception("Server error");
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -153,8 +178,7 @@ class _ProductsState extends State<Products> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => Test(
-                                  ),
+                              builder: (_) => Test(),
                             ),
                           );
                         },
@@ -172,9 +196,8 @@ class _ProductsState extends State<Products> {
                 decoration: BoxDecoration(
                     // color: Colors.white,
                     borderRadius: BorderRadius.circular(15.0),
-                    border: Border.all(color: Colors.grey)
-                    ),
-                     child: Column(
+                    border: Border.all(color: Colors.grey)),
+                child: Column(
                   children: <Widget>[
                     Container(
                         width: 100,
@@ -228,8 +251,7 @@ class _ProductsState extends State<Products> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => Test(
-                                  ),
+                              builder: (_) => Test(),
                             ),
                           );
                         },
@@ -242,8 +264,17 @@ class _ProductsState extends State<Products> {
                 ),
               ),
             ],
+          ),
+          FutureBuilder(
+            future: _getOrderOfUser(),
+          builder: (context, snapshot){
+            if(snapshot.hasData){
+              List<ShopsModel> shopsArr = snapshot.data;
+            }
+          }
           )
-        ]),
+        ]
+        ),
       ),
     );
   }
