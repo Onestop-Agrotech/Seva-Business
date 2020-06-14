@@ -16,8 +16,8 @@ class Signin extends StatefulWidget {
 
 class _SigninState extends State<Signin> {
   bool showOTPField = false;
-  final FocusNode _mobileFocus = FocusNode();
-  final TextEditingController _mobileController = TextEditingController();
+  final _mobileFocus = FocusNode();
+  final _mobileController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -28,67 +28,67 @@ class _SigninState extends State<Signin> {
         painter: GreenPaintBgLogin(),
         child: Padding(
           padding: const EdgeInsets.all(30.0),
-          child: Form(
-            key: _formKey,
-            child: ListView(children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Sign In",
+                  style: TextStyle(fontSize: 28.0, color: Colors.blueGrey),
+                ),
+              ],
+            ),
+            SizedBox(height: 60.0),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Row(
                 children: <Widget>[
                   Text(
-                    "Sign In",
-                    style: TextStyle(fontSize: 28.0, color: Colors.blueGrey),
+                    "S",
+                    style: TextStyle(
+                        fontSize: 45.0,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500),
                   ),
-                ],
-              ),
-              SizedBox(height: 60.0),
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "S",
-                      style: TextStyle(
-                          fontSize: 45.0,
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "eva",
+                  Text(
+                    "eva",
+                    style: TextStyle(
+                        fontSize: 30.0,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(
+                    "B",
+                    style: TextStyle(
+                        fontSize: 45.0,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text("usiness",
                       style: TextStyle(
                           fontSize: 30.0,
                           color: Colors.green,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(width: 10.0),
-                    Text(
-                      "B",
-                      style: TextStyle(
-                          fontSize: 45.0,
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text("usiness",
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            color: Colors.green,
-                            fontWeight: FontWeight.w500))
-                  ],
-                ),
+                          fontWeight: FontWeight.w500))
+                ],
               ),
-              SizedBox(height: 20.0),
-              Padding(
-                padding: const EdgeInsets.only(left: 40.0),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "Mobile:",
-                      style: TextStyle(fontSize: 24.0),
-                    ),
-                  ],
-                ),
+            ),
+            SizedBox(height: 20.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 40.0),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Mobile:",
+                    style: TextStyle(fontSize: 24.0),
+                  ),
+                ],
               ),
-              SizedBox(height: 20.0),
-              Column(
+            ),
+            SizedBox(height: 20.0),
+            Form(
+              key: _formKey,
+              child: Column(
                 children: <Widget>[
                   Container(
                     width: 260,
@@ -98,10 +98,10 @@ class _SigninState extends State<Signin> {
                       autofocus: false,
                       focusNode: _mobileFocus,
                       keyboardType: TextInputType.number,
-                            controller: _mobileController,
+                      controller: _mobileController,
 
                       validator: (String val) {
-                        if (val.isEmpty) return 'MObile  cannot be empty';
+                        if (val.isEmpty) return 'Mobile cannot be empty';
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -113,41 +113,40 @@ class _SigninState extends State<Signin> {
                       // onTap: ,
                     ),
                   ),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              showOTPField
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 40.0),
-                          child: Text(
-                            "Enter OTP:",
-                            style: TextStyle(fontSize: 24.0),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 40, right: 100),
-                          child: OTPTextField(
-                            length: 6,
-                            width: MediaQuery.of(context).size.width,
-                            fieldWidth: 30,
-                            style: TextStyle(fontSize: 20),
-                            textFieldAlignment: MainAxisAlignment.spaceAround,
-                            fieldStyle: FieldStyle.underline,
-                            onCompleted: (pin) {
-                              print("Completed: " + pin);
-                            },
-                          ),
-                        ),
-                      ],
-                    )
-                  : SizedBox(),
-              showOTPField
-                  ? Column(
-                      children: <Widget>[
-                        Padding(
+                  SizedBox(height: 10.0),
+                  showOTPField
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(left: 40.0),
+                              child: Text(
+                                "Enter OTP:",
+                                style: TextStyle(fontSize: 24.0),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 40, right: 100),
+                              child: OTPTextField(
+                                
+                                length: 6,
+                                width: MediaQuery.of(context).size.width,
+                                fieldWidth: 30,
+                                style: TextStyle(fontSize: 20),
+                                textFieldAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                fieldStyle: FieldStyle.underline,
+                                onCompleted: (pin) {
+                                  print("Completed: " + pin);
+                                },
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
+                  showOTPField
+                      ? Padding(
                           padding: const EdgeInsets.only(top: 50),
                           child: Container(
                               child: RaisedButton(
@@ -163,30 +162,30 @@ class _SigninState extends State<Signin> {
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white)),
                           )),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: <Widget>[
-                        Container(
-                            child: RaisedButton(
+                        )
+                      : Container(
+                          child: RaisedButton(
                           color: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                           ),
                           onPressed: () {
-                            setState(() {
-                              showOTPField = true;
-                            });
+                            if (_formKey.currentState.validate()) {
+                              setState(() {
+                                showOTPField = true;
+                              });
+                              _mobileFocus.unfocus();
+                              print(_mobileController.text);
+                            }
                           },
                           child: const Text('Get OTP',
                               style:
                                   TextStyle(fontSize: 20, color: Colors.white)),
-                        )),
-                      ],
-                    )
-            ]),
-          ),
+                        ))
+                ],
+              ),
+            ),
+          ]),
         ),
       ),
     );
