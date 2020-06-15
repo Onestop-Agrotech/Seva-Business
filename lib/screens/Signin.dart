@@ -156,7 +156,7 @@ class _SigninState extends State<Signin> {
                             ),
                             onPressed: () {
                               Navigator.of(context)
-                                  .pushReplacementNamed('/products');
+                                  .pushReplacementNamed('/test');
                             },
                             child: Text('Sign IN',
                                 style: TextStyle(

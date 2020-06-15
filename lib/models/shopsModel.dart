@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+
 class ShopsModel {
   ShopsModel({
     this.id,
@@ -35,4 +38,6 @@ class ShopsModel {
         date: DateTime.parse(json["date"]),
         v: json["__v"],
       );
+
+      
 }

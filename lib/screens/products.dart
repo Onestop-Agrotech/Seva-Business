@@ -22,23 +22,9 @@ class _ProductsState extends State<Products> {
   void initState() {
     super.initState();
     _data = true;
-    _getOrderOfUser();
   }
 
-  _getOrderOfUser() async {
-    String url = APIService.getStoreAPI;
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      // print("worked");
-      return json.decode(response.body);
-    } else if (response.statusCode == 404) {
-      // no orders
-      setState(() {
-        _data = false;
-      });
-    } else
-      throw Exception("Server error");
-  }
+ 
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,20 +245,14 @@ class _ProductsState extends State<Products> {
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black)),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          FutureBuilder(
-            future: _getOrderOfUser(),
-          builder: (context, snapshot){
-            if(snapshot.hasData){
-              List<ShopsModel> shopsArr = snapshot.data;
-            }
-          }
-          )
+                              
+
         ]
         ),
       ),
