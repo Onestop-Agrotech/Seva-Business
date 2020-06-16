@@ -120,9 +120,8 @@ class _TestState extends State<Test> {
                     ],
                   );
                 } else {
-                  return 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 30.0, bottom: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
@@ -130,6 +129,7 @@ class _TestState extends State<Test> {
                           height: 250.0,
                           width: 180,
                           decoration: BoxDecoration(
+                              // color: Colors.white,
                               borderRadius: BorderRadius.circular(15.0),
                               border: Border.all(color: Colors.grey)),
                           child: Column(
@@ -200,7 +200,7 @@ class _TestState extends State<Test> {
                               )
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   );
