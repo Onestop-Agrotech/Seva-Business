@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
-import 'package:sevaBusiness/models/shopsModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
