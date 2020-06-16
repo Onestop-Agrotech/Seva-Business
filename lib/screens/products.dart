@@ -65,25 +65,28 @@ class _ProductsState extends State<Products> {
                         padding: const EdgeInsets.all(40.0),
                         child: Row(
                           children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                height: 50.0,
-                                decoration: BoxDecoration(
+                           Expanded(
+                        child: Container(
+                                                          height: 50.0,
+
+                      decoration: BoxDecoration(
                                     color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                child: Row(
-                                  children: <Widget>[
-                                    Padding(
+                                    borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Padding(
                                       padding: const EdgeInsets.only(left: 20),
-                                      child: Text(
-                                        "Search...",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                        
+                            border: InputBorder.none,
+                            hintText: "Search...",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                      ),
+                    )
+                    ),
                           ],
                         ),
                       ),
