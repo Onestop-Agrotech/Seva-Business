@@ -38,12 +38,13 @@ class _ProductsState extends State<Products> {
         for (var i in jsonData["output"]) 
         products.add(AllProducts.fromJson(i));
     }
+    print(products);
     return products;
   }
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.5;
     final double itemWidth = size.width / 2;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -143,7 +144,7 @@ class _ProductsState extends State<Products> {
                           childAspectRatio: (itemWidth / itemHeight),
                         ),
                         delegate:
-                            SliverChildBuilderDelegate((context, shopIndex) {
+                            SliverChildBuilderDelegate((context, productIndex) {
                           return Padding(
                             padding: const EdgeInsets.all(10),
                             child: Container(
@@ -165,7 +166,7 @@ class _ProductsState extends State<Products> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: Text(
-                                          'name',
+                                         snapshot.data[productIndex].username,
                                           style: TextStyle(fontSize: 20),
                                         ),
                                       ),
@@ -177,7 +178,7 @@ class _ProductsState extends State<Products> {
                                         padding: const EdgeInsets.only(
                                             left: 20, top: 5),
                                         child: Text(
-                                          'locla',
+                                          snapshot.data[productIndex].city,
                                           style: TextStyle(fontSize: 15),
                                         ),
                                       ),
