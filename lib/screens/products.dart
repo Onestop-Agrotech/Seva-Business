@@ -38,7 +38,6 @@ class _ProductsState extends State<Products> {
         for (var i in jsonData["output"]) 
         products.add(AllProducts.fromJson(i));
     }
-    print(products);
     return products;
   }
 
