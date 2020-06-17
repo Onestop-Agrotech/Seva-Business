@@ -1,6 +1,6 @@
 
-class AllShops {
-  AllShops({
+class AllProducts {
+  AllProducts({
     this.id,
     this.storeId,
     this.username,
@@ -26,7 +26,7 @@ class AllShops {
   DateTime date;
   int v;
 
-  factory AllShops.fromJson(Map<String, dynamic> json) => AllShops(
+  factory AllProducts.fromJson(Map<String, dynamic> json) => AllProducts(
         id: json["_id"],
         storeId: json["store_id"],
         username: json["username"],
@@ -75,4 +75,4 @@ class Coordinates {
       };
 }
 //TO ADD A SHOP(NOT USING)
-//String allShopsToJson(AllShops data) => json.encode(data.toJson());
+//String allProductsToJson(AllShops data) => json.encode(data.toJson());

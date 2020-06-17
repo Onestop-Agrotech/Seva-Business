@@ -17,30 +17,28 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   bool showOTPField = false;
-  List dataFromDB;
-  AllShops shopsModel;
   var future = null;
 
   @override
   void initState() {
     super.initState();
-    future=getAllShops();
+    future=getProducts();
   }
 
 
-  List<AllShops> allShops = List<AllShops>();
+  List<AllProducts> products = List<AllProducts>();
 
-  Future<List<AllShops>> getAllShops() async {
-    allShops = [];
+  Future<List<AllProducts>> getProducts() async {
+    products = [];
     String url = APIService.getStoreAPI;
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData["response"])
         for (var i in jsonData["output"]) 
-        allShops.add(AllShops.fromJson(i));
+        products.add(AllProducts.fromJson(i));
     }
-    return allShops;
+    return products;
   }
 
   Widget build(BuildContext context) {
