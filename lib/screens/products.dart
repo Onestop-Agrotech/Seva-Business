@@ -31,24 +31,20 @@ class _ProductsState extends State<Products> {
   List<AllShops> allShops = List<AllShops>();
 
   Future<List<AllShops>> getAllShops() async {
-    print("[ALL SHOPS]");
     allShops = [];
     String url = APIService.getStoreAPI;
     final response = await http.get(url);
-    print("Status Code:" + response.statusCode.toString());
     if (response.statusCode == 200) {
-      print("response.body" + response.body);
       var jsonData = jsonDecode(response.body);
       if (jsonData["response"])
-        for (var i in jsonData["output"]) allShops.add(AllShops.fromJson(i));
+        for (var i in jsonData["output"]) 
+        allShops.add(AllShops.fromJson(i));
     }
     return allShops;
   }
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
     final double itemWidth = size.width / 2;
     return Scaffold(
