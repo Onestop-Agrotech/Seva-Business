@@ -17,7 +17,7 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   bool showOTPField = false;
-  var future = null;
+  var future;
 
   @override
   void initState() {
@@ -210,12 +210,7 @@ class _ProductsState extends State<Products> {
                                     child: RaisedButton(
                                       color: Colors.white,
                                       onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              // builder: (_) => Test(),
-                                              ),
-                                        );
+                                        
                                       },
                                       child: const Text('Edit',
                                           style: TextStyle(

@@ -100,6 +100,7 @@ class _SigninState extends State<Signin> {
 
                       validator: (String val) {
                         if (val.isEmpty) return 'Mobile cannot be empty';
+                        else return '';
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
