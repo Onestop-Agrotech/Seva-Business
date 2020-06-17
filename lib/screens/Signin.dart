@@ -99,8 +99,10 @@ class _SigninState extends State<Signin> {
                       controller: _mobileController,
 
                       validator: (String val) {
-                        if (val.isEmpty) return 'Mobile cannot be empty';
-                        else return '';
+                        if (val.isEmpty)
+                          return 'Mobile cannot be empty';
+                        else
+                          return '';
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -128,7 +130,6 @@ class _SigninState extends State<Signin> {
                               padding:
                                   const EdgeInsets.only(left: 40, right: 100),
                               child: OTPTextField(
-                                
                                 length: 6,
                                 width: MediaQuery.of(context).size.width,
                                 fieldWidth: 30,
@@ -136,9 +137,7 @@ class _SigninState extends State<Signin> {
                                 textFieldAlignment:
                                     MainAxisAlignment.spaceAround,
                                 fieldStyle: FieldStyle.underline,
-                                onCompleted: (pin) {
-                                  print("Completed: " + pin);
-                                },
+                                onCompleted: (pin) {},
                               ),
                             ),
                           ],
@@ -174,7 +173,6 @@ class _SigninState extends State<Signin> {
                                 showOTPField = true;
                               });
                               _mobileFocus.unfocus();
-                              print(_mobileController.text);
                             }
                           },
                           child: const Text('Get OTP',

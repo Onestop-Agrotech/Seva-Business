@@ -22,9 +22,8 @@ class _ProductsState extends State<Products> {
   @override
   void initState() {
     super.initState();
-    future=getProducts();
+    future = getProducts();
   }
-
 
   List<AllProducts> products = List<AllProducts>();
 
@@ -35,8 +34,7 @@ class _ProductsState extends State<Products> {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData["response"])
-        for (var i in jsonData["output"]) 
-        products.add(AllProducts.fromJson(i));
+        for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
     }
     return products;
   }
@@ -50,7 +48,7 @@ class _ProductsState extends State<Products> {
       body: CustomPaint(
         painter: GreenPaintingBgProducts(),
         child: FutureBuilder(
-          future:future,
+          future: future,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.length > 0) {
@@ -165,7 +163,7 @@ class _ProductsState extends State<Products> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: Text(
-                                         snapshot.data[productIndex].username,
+                                          snapshot.data[productIndex].username,
                                           style: TextStyle(fontSize: 20),
                                         ),
                                       ),
@@ -208,9 +206,7 @@ class _ProductsState extends State<Products> {
                                         border: Border.all(color: Colors.grey)),
                                     child: RaisedButton(
                                       color: Colors.white,
-                                      onPressed: () {
-                                        
-                                      },
+                                      onPressed: () {},
                                       child: const Text('Edit',
                                           style: TextStyle(
                                               fontSize: 15,

@@ -17,14 +17,12 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xFFD8ECF1),
         scaffoldBackgroundColor: Color(0xFFF3F5F7),
       ),
-   initialRoute: '/',
-        routes: {
-          '/': (context) => Signin(),
-          '/products': (context) => Products(),
-                    // '/test': (context) => Test(),
-
-
-        },
-            );
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Signin(),
+        '/products': (context) => Products(),
+        // '/test': (context) => Test(),
+      },
+    );
   }
 }
