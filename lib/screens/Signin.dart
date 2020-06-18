@@ -158,7 +158,8 @@ class _SigninState extends State<Signin> {
                             child: Text('Sign IN',
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white)),
-                          )),
+                          )
+                          ),
                         )
                       : Container(
                           child: RaisedButton(
@@ -177,7 +178,8 @@ class _SigninState extends State<Signin> {
                           child: const Text('Get OTP',
                               style:
                                   TextStyle(fontSize: 20, color: Colors.white)),
-                        ))
+                        )
+                        )
                 ],
               ),
             ),

@@ -18,6 +18,10 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   bool showOTPField = false;
   var future;
+  List<String> labels = ['Vegetables', 'Fruits'];
+
+//   final fruitList = ['apple', 'orange', 'mango'];
+// final fruitMap = fruitList.asMap();
 
   @override
   void initState() {
@@ -26,6 +30,7 @@ class _ProductsState extends State<Products> {
   }
 
   List<AllProducts> products = List<AllProducts>();
+  var categorySelectedIndex = 0;
 
   Future<List<AllProducts>> getProducts() async {
     products = [];
@@ -102,31 +107,49 @@ class _ProductsState extends State<Products> {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "Vegetables",
-                                      style: TextStyle(fontSize: 20),
+                              children: [
+                                for (int i = 0; i < labels.length; i++)
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        categorySelectedIndex = i;
+                                        print("categorySelected" +
+                                            categorySelectedIndex.toString());
+                                      });
+                                    },
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          labels[i],
+                                          style: TextStyle(fontSize: 20, color: i==categorySelectedIndex ? Colors.green :Colors.black,
+                                          decoration: i==categorySelectedIndex ? TextDecoration.underline : TextDecoration.none
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Icon(
+                                          Icons.lens,
+                                          color: i==categorySelectedIndex ? Colors.black : Colors.grey,
+                                        )
+                                      ],
                                     ),
-                                    SizedBox(height: 10),
-                                    Icon(
-                                      Icons.lens,
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "Fruits",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Icon(
-                                      Icons.lens,
-                                    )
-                                  ],
-                                ),
+                                  )
+                                // RaisedButton(
+
+                                //   onPressed: () {
+                                // setState(() {
+                                //   categorySelectedIndex = i;
+                                //   print("categorySelected" +
+                                //       categorySelectedIndex.toString());
+                                // });
+                                //   },
+                                //   child: Text(
+                                //     labels[i],
+                                  //   style: TextStyle(
+                                  //       color: i == categorySelectedIndex
+                                  //           ? Colors.blue
+                                  //           : Colors.black),
+                                  // ),
+                                // ),
                               ],
                             ),
                             SizedBox(
