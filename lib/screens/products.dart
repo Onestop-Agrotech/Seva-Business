@@ -17,14 +17,13 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   bool showOTPField = false;
-  var future = null;
+  var future;
 
   @override
   void initState() {
     super.initState();
-    future=getProducts();
+    future = getProducts();
   }
-
 
   List<AllProducts> products = List<AllProducts>();
 
@@ -35,22 +34,21 @@ class _ProductsState extends State<Products> {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData["response"])
-        for (var i in jsonData["output"]) 
-        products.add(AllProducts.fromJson(i));
+        for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
     }
     return products;
   }
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.5;
     final double itemWidth = size.width / 2;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomPaint(
         painter: GreenPaintingBgProducts(),
         child: FutureBuilder(
-          future:future,
+          future: future,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.length > 0) {
@@ -143,7 +141,7 @@ class _ProductsState extends State<Products> {
                           childAspectRatio: (itemWidth / itemHeight),
                         ),
                         delegate:
-                            SliverChildBuilderDelegate((context, shopIndex) {
+                            SliverChildBuilderDelegate((context, productIndex) {
                           return Padding(
                             padding: const EdgeInsets.all(10),
                             child: Container(
@@ -165,7 +163,7 @@ class _ProductsState extends State<Products> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: Text(
-                                          'name',
+                                          snapshot.data[productIndex].username,
                                           style: TextStyle(fontSize: 20),
                                         ),
                                       ),
@@ -177,7 +175,7 @@ class _ProductsState extends State<Products> {
                                         padding: const EdgeInsets.only(
                                             left: 20, top: 5),
                                         child: Text(
-                                          'locla',
+                                          snapshot.data[productIndex].city,
                                           style: TextStyle(fontSize: 15),
                                         ),
                                       ),
@@ -208,14 +206,7 @@ class _ProductsState extends State<Products> {
                                         border: Border.all(color: Colors.grey)),
                                     child: RaisedButton(
                                       color: Colors.white,
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              // builder: (_) => Test(),
-                                              ),
-                                        );
-                                      },
+                                      onPressed: () {},
                                       child: const Text('Edit',
                                           style: TextStyle(
                                               fontSize: 15,

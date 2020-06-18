@@ -136,9 +136,7 @@ class _SigninState extends State<Signin> {
                                 textFieldAlignment:
                                     MainAxisAlignment.spaceAround,
                                 fieldStyle: FieldStyle.underline,
-                                onCompleted: (pin) {
-                                  print("Completed: " + pin);
-                                },
+                                onCompleted: (pin) {},
                               ),
                             ),
                           ],
@@ -174,7 +172,6 @@ class _SigninState extends State<Signin> {
                                 showOTPField = true;
                               });
                               _mobileFocus.unfocus();
-                              print(_mobileController.text);
                             }
                           },
                           child: const Text('Get OTP',
