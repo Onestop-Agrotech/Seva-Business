@@ -5,7 +5,7 @@ import 'package:sevaBusiness/graphics/greenBg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:sevaBusiness/model/shopsModel.dart';
+import 'package:sevaBusiness/model/productsModel.dart';
 
 class Products extends StatefulWidget {
   Products({Key key, this.title}) : super(key: key);
