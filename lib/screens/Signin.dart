@@ -99,7 +99,9 @@ class _SigninState extends State<Signin> {
                       controller: _mobileController,
 
                       validator: (String val) {
-                        if (val.isEmpty) return 'Mobile cannot be empty';
+                        if (val.isEmpty || val.length < 10)
+                          return ('Need 10 digit numbers');
+                        // if (val.length < 10) return 'Need 10 digit numbers';
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -127,7 +129,6 @@ class _SigninState extends State<Signin> {
                               padding:
                                   const EdgeInsets.only(left: 40, right: 100),
                               child: OTPTextField(
-                                
                                 length: 6,
                                 width: MediaQuery.of(context).size.width,
                                 fieldWidth: 30,
