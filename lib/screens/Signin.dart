@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
 
 class Signin extends StatefulWidget {
@@ -32,53 +33,70 @@ class _SigninState extends State<Signin> {
               children: <Widget>[
                 Text(
                   "Sign In",
-                  style: TextStyle(fontSize: 28.0, color: Colors.blueGrey),
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    color: ThemeColoursSeva().dkGreen,
+                    fontFamily: "Raleway",
+                        
+
+                  ),
                 ),
               ],
             ),
             SizedBox(height: 60.0),
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const EdgeInsets.all(25.0),
               child: Row(
                 children: <Widget>[
                   Text(
                     "S",
                     style: TextStyle(
-                        fontSize: 45.0,
-                        color: Colors.green,
-                        fontWeight: FontWeight.w500),
+                      fontSize: 40.0,
+                      color: ThemeColoursSeva().lgGreen,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Raleway",
+                    ),
                   ),
                   Text(
                     "eva",
                     style: TextStyle(
-                        fontSize: 30.0,
-                        color: Colors.green,
-                        fontWeight: FontWeight.w500),
+                      fontSize: 30.0,
+                      color: ThemeColoursSeva().lgGreen,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Raleway",
+                    ),
                   ),
                   SizedBox(width: 10.0),
                   Text(
                     "B",
                     style: TextStyle(
-                        fontSize: 45.0,
-                        color: Colors.green,
-                        fontWeight: FontWeight.w500),
+                      fontSize: 40.0,
+                      color: ThemeColoursSeva().lgGreen,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Raleway",
+                    ),
                   ),
                   Text("usiness",
                       style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500))
+                        fontSize: 30.0,
+                        color: ThemeColoursSeva().lgGreen,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Raleway",
+                      ))
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 50.0),
             Padding(
               padding: const EdgeInsets.only(left: 40.0),
               child: Row(
                 children: <Widget>[
                   Text(
                     "Mobile:",
-                    style: TextStyle(fontSize: 24.0),
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontFamily: "Raleway",
+                    ),
                   ),
                 ],
               ),
@@ -100,12 +118,12 @@ class _SigninState extends State<Signin> {
 
                       validator: (String val) {
                         if (val.isEmpty || val.length < 10)
-                          return ('Need 10 digit numbers');
+                          return ('Min 10 digit number required!');
                         // if (val.length < 10) return 'Need 10 digit numbers';
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lightGreen),
+                            borderSide: BorderSide(color: ThemeColoursSeva().dkGreen),
                             borderRadius: BorderRadius.circular(10)),
                         labelText: '+91',
                       ),
@@ -122,7 +140,10 @@ class _SigninState extends State<Signin> {
                               padding: const EdgeInsets.only(left: 40.0),
                               child: Text(
                                 "Enter OTP:",
-                                style: TextStyle(fontSize: 24.0),
+                                style: TextStyle(
+                                  fontSize: 24.0,
+                                  fontFamily: "Raleway",
+                                ),
                               ),
                             ),
                             Padding(
@@ -130,6 +151,7 @@ class _SigninState extends State<Signin> {
                                   const EdgeInsets.only(left: 40, right: 100),
                               child: OTPTextField(
                                 length: 6,
+                                
                                 width: MediaQuery.of(context).size.width,
                                 fieldWidth: 30,
                                 style: TextStyle(fontSize: 20),
@@ -147,7 +169,7 @@ class _SigninState extends State<Signin> {
                           padding: const EdgeInsets.only(top: 50),
                           child: Container(
                               child: RaisedButton(
-                            color: Colors.green,
+                            color: ThemeColoursSeva().dkGreen,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                             ),
@@ -157,13 +179,15 @@ class _SigninState extends State<Signin> {
                             },
                             child: Text('Sign IN',
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.white)),
-                          )
-                          ),
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontFamily: "Raleway",
+                                )),
+                          )),
                         )
                       : Container(
                           child: RaisedButton(
-                          color: Colors.green,
+                          color: ThemeColoursSeva().dkGreen,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                           ),
@@ -176,10 +200,12 @@ class _SigninState extends State<Signin> {
                             }
                           },
                           child: const Text('Get OTP',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white)),
-                        )
-                        )
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontFamily: "Raleway",
+                              )),
+                        ))
                 ],
               ),
             ),

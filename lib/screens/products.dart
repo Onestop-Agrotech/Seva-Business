@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
+import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -64,6 +65,7 @@ class _ProductsState extends State<Products> {
                       SliverList(
                         delegate: SliverChildListDelegate(
                           [
+                            SizedBox(height: 20),
                             Padding(
                               padding: const EdgeInsets.only(top: 60),
                               child: Row(
@@ -72,7 +74,10 @@ class _ProductsState extends State<Products> {
                                   Text(
                                     "My Products",
                                     style: TextStyle(
-                                        fontSize: 25.0, color: Colors.blueGrey),
+                                      fontSize: 25.0,
+                                      color: ThemeColoursSeva().dkGreen,
+                                      fontFamily: "Raleway",
+                                    ),
                                   ),
                                 ],
                               ),
@@ -98,7 +103,10 @@ class _ProductsState extends State<Products> {
                                               TextStyle(color: Colors.black),
                                         ),
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 20),
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontFamily: "Raleway",
+                                        ),
                                       ),
                                     ),
                                   )),
@@ -121,35 +129,28 @@ class _ProductsState extends State<Products> {
                                       children: <Widget>[
                                         Text(
                                           labels[i],
-                                          style: TextStyle(fontSize: 20, color: i==categorySelectedIndex ? Colors.green :Colors.black,
-                                          decoration: i==categorySelectedIndex ? TextDecoration.underline : TextDecoration.none
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: i == categorySelectedIndex
+                                                ?  ThemeColoursSeva().dkGreen
+                                                :  ThemeColoursSeva().vlgGreen,
+                                            decoration:
+                                                i == categorySelectedIndex
+                                                    ? TextDecoration.underline
+                                                    : TextDecoration.none,
+                                            fontFamily: "Raleway",
                                           ),
                                         ),
                                         SizedBox(height: 10),
                                         Icon(
                                           Icons.lens,
-                                          color: i==categorySelectedIndex ? Colors.black : Colors.grey,
+                                          color: i == categorySelectedIndex
+                                              ? Colors.black
+                                              : Colors.grey,
                                         )
                                       ],
                                     ),
                                   )
-                                // RaisedButton(
-
-                                //   onPressed: () {
-                                // setState(() {
-                                //   categorySelectedIndex = i;
-                                //   print("categorySelected" +
-                                //       categorySelectedIndex.toString());
-                                // });
-                                //   },
-                                //   child: Text(
-                                //     labels[i],
-                                  //   style: TextStyle(
-                                  //       color: i == categorySelectedIndex
-                                  //           ? Colors.blue
-                                  //           : Colors.black),
-                                  // ),
-                                // ),
                               ],
                             ),
                             SizedBox(
@@ -187,7 +188,10 @@ class _ProductsState extends State<Products> {
                                             const EdgeInsets.only(left: 20),
                                         child: Text(
                                           snapshot.data[productIndex].username,
-                                          style: TextStyle(fontSize: 20),
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: "Raleway",
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -199,7 +203,10 @@ class _ProductsState extends State<Products> {
                                             left: 20, top: 5),
                                         child: Text(
                                           snapshot.data[productIndex].city,
-                                          style: TextStyle(fontSize: 15),
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: "Raleway",
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -211,11 +218,17 @@ class _ProductsState extends State<Products> {
                                     children: <Widget>[
                                       Text(
                                         "Rs 200",
-                                        style: TextStyle(fontSize: 20),
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: "Raleway",
+                                        ),
                                       ),
                                       Text(
                                         "1 kg",
-                                        style: TextStyle(fontSize: 20),
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: "Raleway",
+                                        ),
                                       )
                                     ],
                                   ),
@@ -232,8 +245,10 @@ class _ProductsState extends State<Products> {
                                       onPressed: () {},
                                       child: const Text('Edit',
                                           style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black)),
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                            fontFamily: "Raleway",
+                                          )),
                                     ),
                                   )
                                 ],

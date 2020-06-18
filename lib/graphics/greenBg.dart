@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sevaBusiness/constants/themeColors.dart';
 
 class GreenPaintingBgProducts extends CustomPainter {
   @override
@@ -15,7 +16,7 @@ class GreenPaintingBgProducts extends CustomPainter {
 
 
     // paint
-    paint.color = Colors.green;
+    paint.color = ThemeColoursSeva().vlgGreen;
     canvas.drawPath(ovalPath, paint);
   }
 
@@ -39,7 +40,7 @@ class GreenPaintBgLogin extends CustomPainter {
     ovalPath.close();
 
  
-    paint.color = Colors.green;
+    paint.color = ThemeColoursSeva().vlgGreen;
      var center = Offset(width / 0.78,height / 2.9);
     canvas.drawCircle(center, 180.0, paint);
       var location = Offset(width / 7,height / 0.93);
