@@ -43,7 +43,7 @@ class _SigninState extends State<Signin> {
                 ),
               ],
             ),
-            SizedBox(height: 60.0),
+            SizedBox(height: 40.0),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: Row(
@@ -86,7 +86,7 @@ class _SigninState extends State<Signin> {
                 ],
               ),
             ),
-            SizedBox(height: 50.0),
+            SizedBox(height: 30.0),
             Padding(
               padding: const EdgeInsets.only(left: 40.0),
               child: Row(

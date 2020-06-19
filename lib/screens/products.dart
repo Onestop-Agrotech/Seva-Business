@@ -47,7 +47,9 @@ class _ProductsState extends State<Products> {
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.5;
+    var heightOfScreen = size.longestSide;
+    print(size.longestSide);
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.1;
     final double itemWidth = size.width / 2;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -57,7 +59,7 @@ class _ProductsState extends State<Products> {
           children: <Widget>[
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(top: 60),
+              padding: const EdgeInsets.only(top: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -141,7 +143,7 @@ class _ProductsState extends State<Products> {
                   )
               ],
             ),
-            SizedBox(height:10),
+            SizedBox(height: 10),
             FutureBuilder(
               future: future,
               builder: (context, snapshot) {
@@ -156,7 +158,13 @@ class _ProductsState extends State<Products> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: (itemWidth / itemHeight),
+                                childAspectRatio: heightOfScreen>700 ? MediaQuery.of(context)
+                                        .size
+                                        .width /
+                                    (MediaQuery.of(context).size.height / 1.4) :MediaQuery.of(context)
+                                        .size
+                                        .width /
+                                    (MediaQuery.of(context).size.height / 1.2),
                               ),
                               delegate: SliverChildBuilderDelegate(
                                   (context, productIndex) {
@@ -164,7 +172,6 @@ class _ProductsState extends State<Products> {
                                   padding: const EdgeInsets.all(10),
                                   child: Container(
                                     width: 180,
-
                                     // height: double.infinity,
                                     decoration: BoxDecoration(
                                         borderRadius:
