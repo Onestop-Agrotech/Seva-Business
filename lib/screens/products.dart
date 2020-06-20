@@ -20,9 +20,8 @@ class _ProductsState extends State<Products> {
   bool showOTPField = false;
   var future;
   List<String> labels = ['Vegetables', 'Fruits'];
-
-//   final fruitList = ['apple', 'orange', 'mango'];
-// final fruitMap = fruitList.asMap();
+  List<AllProducts> products = List<AllProducts>();
+  var categorySelectedIndex = 0;
 
   @override
   void initState() {
@@ -30,8 +29,6 @@ class _ProductsState extends State<Products> {
     future = getProducts();
   }
 
-  List<AllProducts> products = List<AllProducts>();
-  var categorySelectedIndex = 0;
 
   Future<List<AllProducts>> getProducts() async {
     products = [];
@@ -40,7 +37,8 @@ class _ProductsState extends State<Products> {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData["response"])
-        for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
+        for (var i in jsonData["output"]) 
+        products.add(AllProducts.fromJson(i));
     }
     return products;
   }
@@ -48,9 +46,7 @@ class _ProductsState extends State<Products> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var heightOfScreen = size.longestSide;
-    print(size.longestSide);
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.1;
-    final double itemWidth = size.width / 2;
+  
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomPaint(
@@ -112,8 +108,9 @@ class _ProductsState extends State<Products> {
                     onTap: () {
                       setState(() {
                         categorySelectedIndex = i;
-                        print("categorySelected" +
-                            categorySelectedIndex.toString());
+                        // print("categorySelected" +
+                        //     categorySelectedIndex.toString()
+                        //     );
                       });
                     },
                     child: Column(

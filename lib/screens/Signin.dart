@@ -119,7 +119,8 @@ class _SigninState extends State<Signin> {
                       validator: (String val) {
                         if (val.isEmpty || val.length < 10)
                           return ('Min 10 digit number required!');
-                        // if (val.length < 10) return 'Need 10 digit numbers';
+                        else
+                        return (null);
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
