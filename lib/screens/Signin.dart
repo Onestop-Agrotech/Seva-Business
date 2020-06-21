@@ -37,8 +37,6 @@ class _SigninState extends State<Signin> {
                     fontSize: 24.0,
                     color: ThemeColoursSeva().dkGreen,
                     fontFamily: "Raleway",
-                        
-
                   ),
                 ),
               ],
@@ -120,11 +118,12 @@ class _SigninState extends State<Signin> {
                         if (val.isEmpty || val.length < 10)
                           return ('Min 10 digit number required!');
                         else
-                        return (null);
+                          return (null);
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderSide: BorderSide(color: ThemeColoursSeva().dkGreen),
+                            borderSide:
+                                BorderSide(color: ThemeColoursSeva().dkGreen),
                             borderRadius: BorderRadius.circular(10)),
                         labelText: '+91',
                       ),
@@ -152,7 +151,6 @@ class _SigninState extends State<Signin> {
                                   const EdgeInsets.only(left: 40, right: 100),
                               child: OTPTextField(
                                 length: 6,
-                                
                                 width: MediaQuery.of(context).size.width,
                                 fieldWidth: 30,
                                 style: TextStyle(fontSize: 20),

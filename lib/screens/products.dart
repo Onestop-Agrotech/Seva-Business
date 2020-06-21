@@ -29,7 +29,6 @@ class _ProductsState extends State<Products> {
     future = getProducts();
   }
 
-
   Future<List<AllProducts>> getProducts() async {
     products = [];
     String url = APIService.getStoreAPI;
@@ -37,8 +36,7 @@ class _ProductsState extends State<Products> {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData["response"])
-        for (var i in jsonData["output"]) 
-        products.add(AllProducts.fromJson(i));
+        for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
     }
     return products;
   }
@@ -46,7 +44,7 @@ class _ProductsState extends State<Products> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var heightOfScreen = size.longestSide;
-  
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomPaint(
@@ -155,13 +153,13 @@ class _ProductsState extends State<Products> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: heightOfScreen>700 ? MediaQuery.of(context)
-                                        .size
-                                        .width /
-                                    (MediaQuery.of(context).size.height / 1.4) :MediaQuery.of(context)
-                                        .size
-                                        .width /
-                                    (MediaQuery.of(context).size.height / 1.2),
+                                childAspectRatio: heightOfScreen > 700
+                                    ? MediaQuery.of(context).size.width /
+                                        (MediaQuery.of(context).size.height /
+                                            1.4)
+                                    : MediaQuery.of(context).size.width /
+                                        (MediaQuery.of(context).size.height /
+                                            1.2),
                               ),
                               delegate: SliverChildBuilderDelegate(
                                   (context, productIndex) {
