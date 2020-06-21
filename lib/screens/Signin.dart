@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Signin extends StatefulWidget {
   Signin({Key key, this.title}) : super(key: key);
@@ -18,6 +21,20 @@ class _SigninState extends State<Signin> {
   final _mobileFocus = FocusNode();
   final _mobileController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  _verifyMobile() async {
+    var getJson = json.encode({"mobile": _mobileController.text});
+    String url = APIService.loginMobile;
+    Map<String, String> headers = {"Content-Type": "application/json"};
+    var response = await http.post(url, body: getJson, headers: headers);
+    if(response.statusCode == 200){
+      // successfully verified phone number
+    } else if (response.statusCode == 404){
+      // throw error, phone number not registered
+    } else if (response.statusCode == 500){
+      // throw error, internal server error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,6 +213,8 @@ class _SigninState extends State<Signin> {
                                 showOTPField = true;
                               });
                               _mobileFocus.unfocus();
+
+                              // Here submit the form
                             }
                           },
                           child: const Text('Get OTP',
