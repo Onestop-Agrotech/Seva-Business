@@ -19,6 +19,7 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   bool showOTPField = false;
   bool _loading = false;
+  bool _inavlidMobile = false;
   final _mobileFocus = FocusNode();
   final _mobileController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -58,6 +59,7 @@ class _SigninState extends State<Signin> {
                   _mobileFocus.unfocus();
                   setState(() {
                     _loading = true;
+                    _inavlidMobile = false;
                   });
 
                   // Here submit the form
@@ -71,6 +73,16 @@ class _SigninState extends State<Signin> {
                     fontFamily: "Raleway",
                   )),
             ));
+  }
+
+  _showInvalidMobile() {
+    if (_inavlidMobile)
+      return Text(
+        'Mobile number not registered!',
+        style: TextStyle(color: Colors.red),
+      );
+    else
+      return Container();
   }
 
   _verifyMobile() async {
@@ -87,6 +99,7 @@ class _SigninState extends State<Signin> {
     } else if (response.statusCode == 404) {
       // throw error, phone number not registered
       setState(() {
+        _inavlidMobile = true;
         _loading = false;
       });
     } else if (response.statusCode == 500) {
@@ -209,6 +222,7 @@ class _SigninState extends State<Signin> {
                       // onTap: ,
                     ),
                   ),
+                  _showInvalidMobile(),
                   SizedBox(height: 10.0),
                   showOTPField
                       ? Column(
@@ -241,7 +255,7 @@ class _SigninState extends State<Signin> {
                           ],
                         )
                       : SizedBox(),
-                      _showLoader()
+                  _showLoader()
                 ],
               ),
             ),
