@@ -30,25 +30,27 @@ class _SigninState extends State<Signin> {
       return CircularProgressIndicator();
     } else
       return showOTPField
-          ? Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: Container(
-                  child: RaisedButton(
-                color: ThemeColoursSeva().dkGreen,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/products');
-                },
-                child: Text('Sign IN',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontFamily: "Raleway",
-                    )),
-              )),
-            )
+          ?
+          // ? Padding(
+          //     padding: const EdgeInsets.only(top: 50),
+          //     child: Container(
+          //         child: RaisedButton(
+          //       color: ThemeColoursSeva().dkGreen,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(18.0),
+          //       ),
+          //       onPressed: () {
+          //         Navigator.of(context).pushReplacementNamed('/products');
+          //       },
+          //       child: Text('Sign IN',
+          //           style: TextStyle(
+          //             fontSize: 20,
+          //             color: Colors.white,
+          //             fontFamily: "Raleway",
+          //           )),
+          //     )),
+          //   )
+          Container()
           : Container(
               child: RaisedButton(
               color: ThemeColoursSeva().dkGreen,
@@ -113,6 +115,26 @@ class _SigninState extends State<Signin> {
       setState(() {
         _loading = false;
       });
+    }
+  }
+
+  _verifyOTP(otp) async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String token = await p.getToken();
+    var getJson = json.encode({"phone": _mobileController.text, "otp": otp});
+    String url = APIService.loginMobile;
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "x-auth-token": token
+    };
+    var response = await http.post(url, body: getJson, headers: headers);
+    if (response.statusCode == 200) {
+      // grant access to the app
+      Navigator.pushReplacementNamed(context, '/products');
+    } else if (response.statusCode == 400) {
+      // incorrect OTP
+    } else if (response.statusCode == 500) {
+      // internal server error
     }
   }
 
@@ -255,7 +277,9 @@ class _SigninState extends State<Signin> {
                                 textFieldAlignment:
                                     MainAxisAlignment.spaceAround,
                                 fieldStyle: FieldStyle.underline,
-                                onCompleted: (pin) {},
+                                onCompleted: (pin) async {
+                                  await _verifyOTP(pin);
+                                },
                               ),
                             ),
                           ],
