@@ -21,36 +21,25 @@ class _SigninState extends State<Signin> {
   bool showOTPField = false;
   bool _loading = false;
   bool _inavlidMobile = false;
+  bool _invalidOTP = false;
+  bool _otpLoader = false;
   final _mobileFocus = FocusNode();
   final _mobileController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  _showOTPLoader() {
+    if (_otpLoader)
+      return CircularProgressIndicator();
+    else
+      return Container();
+  }
 
   _showLoader() {
     if (_loading) {
       return CircularProgressIndicator();
     } else
       return showOTPField
-          ?
-          // ? Padding(
-          //     padding: const EdgeInsets.only(top: 50),
-          //     child: Container(
-          //         child: RaisedButton(
-          //       color: ThemeColoursSeva().dkGreen,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(18.0),
-          //       ),
-          //       onPressed: () {
-          //         Navigator.of(context).pushReplacementNamed('/products');
-          //       },
-          //       child: Text('Sign IN',
-          //           style: TextStyle(
-          //             fontSize: 20,
-          //             color: Colors.white,
-          //             fontFamily: "Raleway",
-          //           )),
-          //     )),
-          //   )
-          Container()
+          ? Container()
           : Container(
               child: RaisedButton(
               color: ThemeColoursSeva().dkGreen,
@@ -64,7 +53,6 @@ class _SigninState extends State<Signin> {
                     _loading = true;
                     _inavlidMobile = false;
                   });
-
                   // Here submit the form
                   await _verifyMobile();
                 }
@@ -82,6 +70,16 @@ class _SigninState extends State<Signin> {
     if (_inavlidMobile)
       return Text(
         'Mobile number not registered!',
+        style: TextStyle(color: Colors.red),
+      );
+    else
+      return Container();
+  }
+
+  _showInvalidOTP() {
+    if (_invalidOTP)
+      return Text(
+        'Incorrect OTP!',
         style: TextStyle(color: Colors.red),
       );
     else
@@ -122,7 +120,7 @@ class _SigninState extends State<Signin> {
     StorageSharedPrefs p = new StorageSharedPrefs();
     String token = await p.getToken();
     var getJson = json.encode({"phone": _mobileController.text, "otp": otp});
-    String url = APIService.loginMobile;
+    String url = APIService.verifyOTP;
     Map<String, String> headers = {
       "Content-Type": "application/json",
       "x-auth-token": token
@@ -133,6 +131,10 @@ class _SigninState extends State<Signin> {
       Navigator.pushReplacementNamed(context, '/products');
     } else if (response.statusCode == 400) {
       // incorrect OTP
+      setState(() {
+        _otpLoader = false;
+        _invalidOTP = true;
+      });
     } else if (response.statusCode == 500) {
       // internal server error
     }
@@ -278,6 +280,10 @@ class _SigninState extends State<Signin> {
                                     MainAxisAlignment.spaceAround,
                                 fieldStyle: FieldStyle.underline,
                                 onCompleted: (pin) async {
+                                  setState(() {
+                                    _otpLoader = true;
+                                    _invalidOTP = false;
+                                  });
                                   await _verifyOTP(pin);
                                 },
                               ),
@@ -285,6 +291,8 @@ class _SigninState extends State<Signin> {
                           ],
                         )
                       : SizedBox(),
+                      _showInvalidOTP(),
+                  _showOTPLoader(),
                   _showLoader()
                 ],
               ),
