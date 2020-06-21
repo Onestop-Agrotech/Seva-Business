@@ -18,21 +18,82 @@ class Signin extends StatefulWidget {
 
 class _SigninState extends State<Signin> {
   bool showOTPField = false;
+  bool _loading = false;
   final _mobileFocus = FocusNode();
   final _mobileController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  _showLoader() {
+    if (_loading) {
+      return CircularProgressIndicator();
+    } else
+      return showOTPField
+          ? Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                  child: RaisedButton(
+                color: ThemeColoursSeva().dkGreen,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/products');
+                },
+                child: Text('Sign IN',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontFamily: "Raleway",
+                    )),
+              )),
+            )
+          : Container(
+              child: RaisedButton(
+              color: ThemeColoursSeva().dkGreen,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+              onPressed: () async {
+                if (_formKey.currentState.validate()) {
+                  _mobileFocus.unfocus();
+                  setState(() {
+                    _loading = true;
+                  });
+
+                  // Here submit the form
+                  await _verifyMobile();
+                }
+              },
+              child: const Text('Get OTP',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontFamily: "Raleway",
+                  )),
+            ));
+  }
+
   _verifyMobile() async {
-    var getJson = json.encode({"mobile": _mobileController.text});
+    var getJson = json.encode({"phone": _mobileController.text});
     String url = APIService.loginMobile;
     Map<String, String> headers = {"Content-Type": "application/json"};
     var response = await http.post(url, body: getJson, headers: headers);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       // successfully verified phone number
-    } else if (response.statusCode == 404){
+      setState(() {
+        _loading = false;
+        showOTPField = true;
+      });
+    } else if (response.statusCode == 404) {
       // throw error, phone number not registered
-    } else if (response.statusCode == 500){
+      setState(() {
+        _loading = false;
+      });
+    } else if (response.statusCode == 500) {
       // throw error, internal server error
+      setState(() {
+        _loading = false;
+      });
     }
   }
 
@@ -180,50 +241,7 @@ class _SigninState extends State<Signin> {
                           ],
                         )
                       : SizedBox(),
-                  showOTPField
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 50),
-                          child: Container(
-                              child: RaisedButton(
-                            color: ThemeColoursSeva().dkGreen,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/products');
-                            },
-                            child: Text('Sign IN',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontFamily: "Raleway",
-                                )),
-                          )),
-                        )
-                      : Container(
-                          child: RaisedButton(
-                          color: ThemeColoursSeva().dkGreen,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              setState(() {
-                                showOTPField = true;
-                              });
-                              _mobileFocus.unfocus();
-
-                              // Here submit the form
-                            }
-                          },
-                          child: const Text('Get OTP',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontFamily: "Raleway",
-                              )),
-                        ))
+                      _showLoader()
                 ],
               ),
             ),
