@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
@@ -92,6 +93,11 @@ class _SigninState extends State<Signin> {
     var response = await http.post(url, body: getJson, headers: headers);
     if (response.statusCode == 200) {
       // successfully verified phone number
+      var bdy = json.decode(response.body);
+      String token = bdy["token"];
+      // store the returned token
+      StorageSharedPrefs p = new StorageSharedPrefs();
+      await p.setToken(token);
       setState(() {
         _loading = false;
         showOTPField = true;
