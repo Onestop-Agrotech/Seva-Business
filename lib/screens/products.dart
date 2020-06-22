@@ -41,17 +41,16 @@ class _ProductsState extends State<Products> {
     // }
     // return products;
     StorageSharedPrefs p = new StorageSharedPrefs();
-      String token = await p.getToken();
-      String username = await p.getUsername();
-      String url = APIService.businessProductsListAPI +
-          "$username/products";
-      Map<String, String> requestHeaders = {'x-auth-token': token};
-      var response = await http.get(url, headers: requestHeaders);
-      if (response.statusCode == 200) {
-        return fromJsonToStoreProduct(response.body);
-      } else {
-        throw Exception('Internal Server error');
-      }
+    String token = await p.getToken();
+    String username = await p.getUsername();
+    String url = APIService.businessProductsListAPI + "$username/products";
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    var response = await http.get(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      return fromJsonToStoreProduct(response.body);
+    } else {
+      throw Exception('Internal Server error');
+    }
   }
 
   Widget build(BuildContext context) {
@@ -156,7 +155,8 @@ class _ProductsState extends State<Products> {
               future: future,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data.length > 0) {
+                  List<StoreProduct> arr = snapshot.data;
+                  if (arr.length > 0) {
                     return Expanded(
                       child: Scrollbar(
                         child: CustomScrollView(
@@ -197,8 +197,7 @@ class _ProductsState extends State<Products> {
                                               padding: const EdgeInsets.only(
                                                   left: 20),
                                               child: Text(
-                                                snapshot.data[productIndex]
-                                                    .username,
+                                                arr[productIndex].name,
                                                 style: TextStyle(
                                                   fontSize: 20,
                                                   fontFamily: "Raleway",
@@ -268,7 +267,7 @@ class _ProductsState extends State<Products> {
                                     ),
                                   ),
                                 );
-                              }, childCount: snapshot.data.length),
+                              }, childCount: arr.length),
                             ),
                           ],
                         ),
