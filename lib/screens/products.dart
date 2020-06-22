@@ -1,44 +1,42 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-import 'package:sevaBusiness/model/productsModel.dart';
+import 'package:sevaBusiness/models/storeProducts.dart';
 
 class Products extends StatefulWidget {
-  Products({Key key, this.title}) : super(key: key);
-
-  final String title;
+  Products({Key key}) : super(key: key);
 
   @override
   _ProductsState createState() => _ProductsState();
 }
 
 class _ProductsState extends State<Products> {
-  bool showOTPField = false;
-  var future;
-  List<String> labels = ['Vegetables', 'Fruits'];
-  List<AllProducts> products = List<AllProducts>();
-  var categorySelectedIndex = 0;
+  List<String> _labels;
+  int _categorySelectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    future = getProducts();
+    _labels = ['Vegetables', 'Fruits'];
   }
 
-  Future<List<AllProducts>> getProducts() async {
-    products = [];
-    String url = APIService.getStoreAPI;
-    final response = await http.get(url);
+  Future<List<StoreProduct>> _getProducts() async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String token = await p.getToken();
+    String username = await p.getUsername();
+    String url = APIService.businessProductsListAPI + "$username/products";
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    var response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
-      var jsonData = jsonDecode(response.body);
-      if (jsonData["response"])
-        for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
+      return fromJsonToStoreProduct(response.body);
+    } else {
+      throw Exception('Internal Server error');
     }
-    return products;
   }
 
   Widget build(BuildContext context) {
@@ -46,6 +44,7 @@ class _ProductsState extends State<Products> {
     var heightOfScreen = size.longestSide;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: CustomPaint(
         painter: GreenPaintingBgProducts(),
@@ -60,7 +59,7 @@ class _ProductsState extends State<Products> {
                   Text(
                     "My Products",
                     style: TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 16.0,
                       color: ThemeColoursSeva().dkGreen,
                       fontFamily: "Raleway",
                     ),
@@ -74,7 +73,7 @@ class _ProductsState extends State<Products> {
                 children: <Widget>[
                   Expanded(
                       child: Container(
-                    height: 50.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(15.0),
@@ -89,7 +88,7 @@ class _ProductsState extends State<Products> {
                         ),
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 15,
                           fontFamily: "Raleway",
                         ),
                       ),
@@ -101,26 +100,23 @@ class _ProductsState extends State<Products> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                for (int i = 0; i < labels.length; i++)
+                for (int i = 0; i < _labels.length; i++)
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        categorySelectedIndex = i;
-                        // print("categorySelected" +
-                        //     categorySelectedIndex.toString()
-                        //     );
+                        _categorySelectedIndex = i;
                       });
                     },
                     child: Column(
                       children: <Widget>[
                         Text(
-                          labels[i],
+                          _labels[i],
                           style: TextStyle(
-                            fontSize: 20,
-                            color: i == categorySelectedIndex
+                            fontSize: 16.5,
+                            color: i == _categorySelectedIndex
                                 ? ThemeColoursSeva().dkGreen
                                 : ThemeColoursSeva().vlgGreen,
-                            decoration: i == categorySelectedIndex
+                            decoration: i == _categorySelectedIndex
                                 ? TextDecoration.underline
                                 : TextDecoration.none,
                             fontFamily: "Raleway",
@@ -129,9 +125,10 @@ class _ProductsState extends State<Products> {
                         SizedBox(height: 10),
                         Icon(
                           Icons.lens,
-                          color: i == categorySelectedIndex
+                          color: i == _categorySelectedIndex
                               ? Colors.black
                               : Colors.grey,
+                          size: 15.0,
                         )
                       ],
                     ),
@@ -140,10 +137,11 @@ class _ProductsState extends State<Products> {
             ),
             SizedBox(height: 10),
             FutureBuilder(
-              future: future,
+              future: _getProducts(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data.length > 0) {
+                  List<StoreProduct> arr = snapshot.data;
+                  if (arr.length > 0) {
                     return Expanded(
                       child: Scrollbar(
                         child: CustomScrollView(
@@ -156,10 +154,10 @@ class _ProductsState extends State<Products> {
                                 childAspectRatio: heightOfScreen > 700
                                     ? MediaQuery.of(context).size.width /
                                         (MediaQuery.of(context).size.height /
-                                            1.4)
+                                            1.2)
                                     : MediaQuery.of(context).size.width /
                                         (MediaQuery.of(context).size.height /
-                                            1.2),
+                                            1.1),
                               ),
                               delegate: SliverChildBuilderDelegate(
                                   (context, productIndex) {
@@ -167,7 +165,6 @@ class _ProductsState extends State<Products> {
                                   padding: const EdgeInsets.all(10),
                                   child: Container(
                                     width: 180,
-                                    // height: double.infinity,
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(15.0),
@@ -175,21 +172,34 @@ class _ProductsState extends State<Products> {
                                     child: Column(
                                       children: <Widget>[
                                         Container(
-                                            width: 100,
-                                            child: Image.asset(
-                                                'assets/image/orange.png')),
+                                          height: 130.0,
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                arr[productIndex].pictureUrl,
+                                            placeholder: (context, url) =>
+                                                Container(
+                                                    height: 50.0,
+                                                    child:
+                                                        Text("Loading...")),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
+                                        ),
+                                        SizedBox(height: 20.0),
                                         Row(
                                           children: <Widget>[
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 20),
                                               child: Text(
-                                                snapshot.data[productIndex]
-                                                    .username,
+                                                arr[productIndex].name,
                                                 style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontFamily: "Raleway",
-                                                ),
+                                                    fontFamily: 'Raleway',
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: ThemeColoursSeva()
+                                                        .black),
                                               ),
                                             ),
                                           ],
@@ -200,12 +210,13 @@ class _ProductsState extends State<Products> {
                                               padding: const EdgeInsets.only(
                                                   left: 20, top: 5),
                                               child: Text(
-                                                snapshot
-                                                    .data[productIndex].city,
+                                                arr[productIndex].description,
                                                 style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontFamily: "Raleway",
-                                                ),
+                                                    fontFamily: 'Raleway',
+                                                    fontSize: 10.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: ThemeColoursSeva()
+                                                        .grey),
                                               ),
                                             ),
                                           ],
@@ -216,18 +227,22 @@ class _ProductsState extends State<Products> {
                                               MainAxisAlignment.spaceAround,
                                           children: <Widget>[
                                             Text(
-                                              "Rs 200",
+                                              "Rs ${arr[productIndex].price}",
                                               style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "Raleway",
-                                              ),
+                                                  fontFamily: 'Raleway',
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      ThemeColoursSeva().black),
                                             ),
                                             Text(
-                                              "1 kg",
+                                              "${arr[productIndex].quantity.quantityValue} ${arr[productIndex].quantity.quantityMetric}",
                                               style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "Raleway",
-                                              ),
+                                                  fontFamily: 'Raleway',
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      ThemeColoursSeva().black),
                                             )
                                           ],
                                         ),
@@ -255,7 +270,7 @@ class _ProductsState extends State<Products> {
                                     ),
                                   ),
                                 );
-                              }, childCount: snapshot.data.length),
+                              }, childCount: arr.length),
                             ),
                           ],
                         ),
