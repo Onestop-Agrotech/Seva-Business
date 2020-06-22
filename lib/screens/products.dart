@@ -9,37 +9,23 @@ import 'package:http/http.dart' as http;
 import 'package:sevaBusiness/models/storeProducts.dart';
 
 class Products extends StatefulWidget {
-  Products({Key key, this.title}) : super(key: key);
-
-  final String title;
+  Products({Key key}) : super(key: key);
 
   @override
   _ProductsState createState() => _ProductsState();
 }
 
 class _ProductsState extends State<Products> {
-  bool showOTPField = false;
-  // Future<List<StoreProduct>> future;
-  List<String> labels = ['Vegetables', 'Fruits'];
-  // List<AllProducts> products = List<AllProducts>();
-  var categorySelectedIndex = 0;
+  List<String> _labels;
+  int _categorySelectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    // future = getProducts();
+    _labels = ['Vegetables', 'Fruits'];
   }
 
   Future<List<StoreProduct>> _getProducts() async {
-    // products = [];
-    // String url = APIService.getStoreAPI;
-    // final response = await http.get(url);
-    // if (response.statusCode == 200) {
-    //   var jsonData = jsonDecode(response.body);
-    //   if (jsonData["response"])
-    //     for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
-    // }
-    // return products;
     StorageSharedPrefs p = new StorageSharedPrefs();
     String token = await p.getToken();
     String username = await p.getUsername();
@@ -114,26 +100,23 @@ class _ProductsState extends State<Products> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                for (int i = 0; i < labels.length; i++)
+                for (int i = 0; i < _labels.length; i++)
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        categorySelectedIndex = i;
-                        // print("categorySelected" +
-                        //     categorySelectedIndex.toString()
-                        //     );
+                        _categorySelectedIndex = i;
                       });
                     },
                     child: Column(
                       children: <Widget>[
                         Text(
-                          labels[i],
+                          _labels[i],
                           style: TextStyle(
                             fontSize: 20,
-                            color: i == categorySelectedIndex
+                            color: i == _categorySelectedIndex
                                 ? ThemeColoursSeva().dkGreen
                                 : ThemeColoursSeva().vlgGreen,
-                            decoration: i == categorySelectedIndex
+                            decoration: i == _categorySelectedIndex
                                 ? TextDecoration.underline
                                 : TextDecoration.none,
                             fontFamily: "Raleway",
@@ -142,7 +125,7 @@ class _ProductsState extends State<Products> {
                         SizedBox(height: 10),
                         Icon(
                           Icons.lens,
-                          color: i == categorySelectedIndex
+                          color: i == _categorySelectedIndex
                               ? Colors.black
                               : Colors.grey,
                         )
@@ -228,14 +211,14 @@ class _ProductsState extends State<Products> {
                                               MainAxisAlignment.spaceAround,
                                           children: <Widget>[
                                             Text(
-                                              "Rs 200",
+                                              "Rs ${arr[productIndex].price}",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontFamily: "Raleway",
                                               ),
                                             ),
                                             Text(
-                                              "1 kg",
+                                              "${arr[productIndex].quantity.quantityValue} ${arr[productIndex].quantity.quantityMetric}",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontFamily: "Raleway",
