@@ -24,6 +24,7 @@ class _ProductsState extends State<Products> {
     super.initState();
     _labels = ['Vegetables', 'Fruits'];
   }
+//
 
   Future<List<StoreProduct>> _getProducts() async {
     StorageSharedPrefs p = new StorageSharedPrefs();
@@ -179,8 +180,7 @@ class _ProductsState extends State<Products> {
                                             placeholder: (context, url) =>
                                                 Container(
                                                     height: 50.0,
-                                                    child:
-                                                        Text("Loading...")),
+                                                    child: Text("Loading...")),
                                             errorWidget:
                                                 (context, url, error) =>
                                                     Icon(Icons.error),
