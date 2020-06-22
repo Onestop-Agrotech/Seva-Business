@@ -127,6 +127,11 @@ class _SigninState extends State<Signin> {
     };
     var response = await http.post(url, body: getJson, headers: headers);
     if (response.statusCode == 200) {
+      StorageSharedPrefs p = new StorageSharedPrefs();
+      var jsonBdy = json.decode(response.body);
+      await p.setUsername(jsonBdy["username"]);
+      await p.setToken(jsonBdy["token"]);
+      await p.setId(jsonBdy["id"]);
       // grant access to the app
       Navigator.pushReplacementNamed(context, '/products');
     } else if (response.statusCode == 400) {

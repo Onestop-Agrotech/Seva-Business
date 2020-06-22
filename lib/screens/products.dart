@@ -19,7 +19,7 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   bool showOTPField = false;
-  Future<List<StoreProduct>> future;
+  // Future<List<StoreProduct>> future;
   List<String> labels = ['Vegetables', 'Fruits'];
   // List<AllProducts> products = List<AllProducts>();
   var categorySelectedIndex = 0;
@@ -27,10 +27,10 @@ class _ProductsState extends State<Products> {
   @override
   void initState() {
     super.initState();
-    future = getProducts();
+    // future = getProducts();
   }
 
-  Future<List<StoreProduct>> getProducts() async {
+  Future<List<StoreProduct>> _getProducts() async {
     // products = [];
     // String url = APIService.getStoreAPI;
     // final response = await http.get(url);
@@ -58,6 +58,7 @@ class _ProductsState extends State<Products> {
     var heightOfScreen = size.longestSide;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: CustomPaint(
         painter: GreenPaintingBgProducts(),
@@ -152,7 +153,7 @@ class _ProductsState extends State<Products> {
             ),
             SizedBox(height: 10),
             FutureBuilder(
-              future: future,
+              future: _getProducts(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<StoreProduct> arr = snapshot.data;
@@ -212,8 +213,7 @@ class _ProductsState extends State<Products> {
                                               padding: const EdgeInsets.only(
                                                   left: 20, top: 5),
                                               child: Text(
-                                                snapshot
-                                                    .data[productIndex].city,
+                                                arr[productIndex].description,
                                                 style: TextStyle(
                                                   fontSize: 15,
                                                   fontFamily: "Raleway",
