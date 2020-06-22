@@ -154,10 +154,10 @@ class _ProductsState extends State<Products> {
                                 childAspectRatio: heightOfScreen > 700
                                     ? MediaQuery.of(context).size.width /
                                         (MediaQuery.of(context).size.height /
-                                            1.4)
+                                            1.2)
                                     : MediaQuery.of(context).size.width /
                                         (MediaQuery.of(context).size.height /
-                                            1.2),
+                                            1.1),
                               ),
                               delegate: SliverChildBuilderDelegate(
                                   (context, productIndex) {
@@ -165,32 +165,28 @@ class _ProductsState extends State<Products> {
                                   padding: const EdgeInsets.all(10),
                                   child: Container(
                                     width: 180,
-                                    // height: double.infinity,
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(15.0),
                                         border: Border.all(color: Colors.grey)),
                                     child: Column(
                                       children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 8.0, left: 5.0),
-                                          child: Container(
-                                            height: 130.0,
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  arr[productIndex].pictureUrl,
-                                              placeholder: (context, url) =>
-                                                  Container(
-                                                      height: 50.0,
-                                                      child:
-                                                          Text("Loading...")),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Icon(Icons.error),
-                                            ),
+                                        Container(
+                                          height: 130.0,
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                arr[productIndex].pictureUrl,
+                                            placeholder: (context, url) =>
+                                                Container(
+                                                    height: 50.0,
+                                                    child:
+                                                        Text("Loading...")),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
                                           ),
                                         ),
+                                        SizedBox(height: 20.0),
                                         Row(
                                           children: <Widget>[
                                             Padding(
