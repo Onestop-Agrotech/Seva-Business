@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
@@ -58,7 +59,7 @@ class _ProductsState extends State<Products> {
                   Text(
                     "My Products",
                     style: TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 16.0,
                       color: ThemeColoursSeva().dkGreen,
                       fontFamily: "Raleway",
                     ),
@@ -72,7 +73,7 @@ class _ProductsState extends State<Products> {
                 children: <Widget>[
                   Expanded(
                       child: Container(
-                    height: 50.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(15.0),
@@ -87,7 +88,7 @@ class _ProductsState extends State<Products> {
                         ),
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 15,
                           fontFamily: "Raleway",
                         ),
                       ),
@@ -111,7 +112,7 @@ class _ProductsState extends State<Products> {
                         Text(
                           _labels[i],
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16.5,
                             color: i == _categorySelectedIndex
                                 ? ThemeColoursSeva().dkGreen
                                 : ThemeColoursSeva().vlgGreen,
@@ -127,6 +128,7 @@ class _ProductsState extends State<Products> {
                           color: i == _categorySelectedIndex
                               ? Colors.black
                               : Colors.grey,
+                          size: 15.0,
                         )
                       ],
                     ),
@@ -170,10 +172,25 @@ class _ProductsState extends State<Products> {
                                         border: Border.all(color: Colors.grey)),
                                     child: Column(
                                       children: <Widget>[
-                                        Container(
-                                            width: 100,
-                                            child: Image.asset(
-                                                'assets/image/orange.png')),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0, left: 5.0),
+                                          child: Container(
+                                            height: 130.0,
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  arr[productIndex].pictureUrl,
+                                              placeholder: (context, url) =>
+                                                  Container(
+                                                      height: 50.0,
+                                                      child:
+                                                          Text("Loading...")),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
+                                          ),
+                                        ),
                                         Row(
                                           children: <Widget>[
                                             Padding(
@@ -182,9 +199,11 @@ class _ProductsState extends State<Products> {
                                               child: Text(
                                                 arr[productIndex].name,
                                                 style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontFamily: "Raleway",
-                                                ),
+                                                    fontFamily: 'Raleway',
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: ThemeColoursSeva()
+                                                        .black),
                                               ),
                                             ),
                                           ],
@@ -197,9 +216,11 @@ class _ProductsState extends State<Products> {
                                               child: Text(
                                                 arr[productIndex].description,
                                                 style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontFamily: "Raleway",
-                                                ),
+                                                    fontFamily: 'Raleway',
+                                                    fontSize: 10.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: ThemeColoursSeva()
+                                                        .grey),
                                               ),
                                             ),
                                           ],
@@ -212,16 +233,20 @@ class _ProductsState extends State<Products> {
                                             Text(
                                               "Rs ${arr[productIndex].price}",
                                               style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "Raleway",
-                                              ),
+                                                  fontFamily: 'Raleway',
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      ThemeColoursSeva().black),
                                             ),
                                             Text(
                                               "${arr[productIndex].quantity.quantityValue} ${arr[productIndex].quantity.quantityMetric}",
                                               style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "Raleway",
-                                              ),
+                                                  fontFamily: 'Raleway',
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      ThemeColoursSeva().black),
                                             )
                                           ],
                                         ),
