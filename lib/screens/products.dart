@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+// import 'dart:convert';
 
-import 'package:sevaBusiness/model/productsModel.dart';
+import 'package:sevaBusiness/models/storeProducts.dart';
 
 class Products extends StatefulWidget {
   Products({Key key, this.title}) : super(key: key);
@@ -18,9 +19,9 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   bool showOTPField = false;
-  var future;
+  Future<List<StoreProduct>> future;
   List<String> labels = ['Vegetables', 'Fruits'];
-  List<AllProducts> products = List<AllProducts>();
+  // List<AllProducts> products = List<AllProducts>();
   var categorySelectedIndex = 0;
 
   @override
@@ -29,16 +30,28 @@ class _ProductsState extends State<Products> {
     future = getProducts();
   }
 
-  Future<List<AllProducts>> getProducts() async {
-    products = [];
-    String url = APIService.getStoreAPI;
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      var jsonData = jsonDecode(response.body);
-      if (jsonData["response"])
-        for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
-    }
-    return products;
+  Future<List<StoreProduct>> getProducts() async {
+    // products = [];
+    // String url = APIService.getStoreAPI;
+    // final response = await http.get(url);
+    // if (response.statusCode == 200) {
+    //   var jsonData = jsonDecode(response.body);
+    //   if (jsonData["response"])
+    //     for (var i in jsonData["output"]) products.add(AllProducts.fromJson(i));
+    // }
+    // return products;
+    StorageSharedPrefs p = new StorageSharedPrefs();
+      String token = await p.getToken();
+      String username = await p.getUsername();
+      String url = APIService.businessProductsListAPI +
+          "$username/products";
+      Map<String, String> requestHeaders = {'x-auth-token': token};
+      var response = await http.get(url, headers: requestHeaders);
+      if (response.statusCode == 200) {
+        return fromJsonToStoreProduct(response.body);
+      } else {
+        throw Exception('Internal Server error');
+      }
   }
 
   Widget build(BuildContext context) {
