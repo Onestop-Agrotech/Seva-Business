@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/common/Productcard.dart';
@@ -43,7 +42,6 @@ class _ProductsState extends State<Products> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var heightOfScreen = size.longestSide;
-    print(heightOfScreen);
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -171,12 +169,9 @@ class _ProductsState extends State<Products> {
                               delegate: SliverChildBuilderDelegate(
                                   (context, productIndex) {
                                 return Productcard(
-                                    arr[productIndex].pictureUrl,
-                                    arr[productIndex].name,
-                                    arr[productIndex].description,
-                                    arr[productIndex].price,
-                                    arr[productIndex].quantity.quantityValue,
-                                    arr[productIndex].quantity.quantityMetric);
+                                  arr[productIndex]
+                                  
+                                    );
                               }, childCount: arr.length),
                             ),
                           ],

@@ -1,15 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
+import 'package:sevaBusiness/models/storeProducts.dart';
 
 class Productcard extends StatelessWidget {
-  String picture;
-  String name;
-  String description;
-  int price;
-  int quantityValue;
-  String quantityMetric;
-  Productcard(this.picture,this.name,this.description,this.price,this.quantityValue,this.quantityMetric);
+ 
+StoreProduct product;
+Productcard(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +25,7 @@ class Productcard extends StatelessWidget {
               height: 130.0,
               child: 
               CachedNetworkImage(
-                imageUrl: picture,
+                imageUrl: product.pictureUrl,
                 placeholder: (context, url) =>
                     Container(height: 50.0, child: Text("Loading...")),
                 errorWidget: (context, url, error) => Icon(Icons.error),
@@ -40,7 +37,7 @@ class Productcard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    name,
+                    product.name,
                     style: TextStyle(
                         fontFamily: 'Raleway',
                         fontSize: 15.0,
@@ -55,7 +52,7 @@ class Productcard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 5),
                   child: Text(
-                    description,
+                    product.description,
                     style: TextStyle(
                         fontFamily: 'Raleway',
                         fontSize: 10.0,
@@ -70,7 +67,7 @@ class Productcard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text(
-                  "Rs $price",
+                  "Rs ${product.price}",
                   style: TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 15.0,
@@ -78,7 +75,7 @@ class Productcard extends StatelessWidget {
                       color: ThemeColoursSeva().black),
                 ),
                 Text(
-                  "$quantityValue $quantityMetric",
+                  "${product.quantity.quantityValue} ${product.quantity.quantityMetric}",
                   style: TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 15.0,
