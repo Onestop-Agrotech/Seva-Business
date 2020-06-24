@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
+import 'package:sevaBusiness/common/Productcard.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
@@ -42,7 +42,6 @@ class _ProductsState extends State<Products> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var heightOfScreen = size.longestSide;
-
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -151,125 +150,28 @@ class _ProductsState extends State<Products> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: heightOfScreen > 700
+                                childAspectRatio: heightOfScreen > 850
                                     ? MediaQuery.of(context).size.width /
                                         (MediaQuery.of(context).size.height /
-                                            1.2)
-                                    : MediaQuery.of(context).size.width /
-                                        (MediaQuery.of(context).size.height /
-                                            1.1),
+                                            1.5)
+                                    : heightOfScreen > 700
+                                        ? MediaQuery.of(context).size.width /
+                                            (MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                1.2)
+                                        : MediaQuery.of(context).size.width /
+                                            (MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                1.1),
                               ),
                               delegate: SliverChildBuilderDelegate(
                                   (context, productIndex) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Container(
-                                    width: 180,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        border: Border.all(color: Colors.grey)),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          height: 130.0,
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                arr[productIndex].pictureUrl,
-                                            placeholder: (context, url) =>
-                                                Container(
-                                                    height: 50.0,
-                                                    child:
-                                                        Text("Loading...")),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error),
-                                          ),
-                                        ),
-                                        SizedBox(height: 20.0),
-                                        Row(
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 20),
-                                              child: Text(
-                                                arr[productIndex].name,
-                                                style: TextStyle(
-                                                    fontFamily: 'Raleway',
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: ThemeColoursSeva()
-                                                        .black),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 20, top: 5),
-                                              child: Text(
-                                                arr[productIndex].description,
-                                                style: TextStyle(
-                                                    fontFamily: 'Raleway',
-                                                    fontSize: 10.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: ThemeColoursSeva()
-                                                        .grey),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 20.0),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: <Widget>[
-                                            Text(
-                                              "Rs ${arr[productIndex].price}",
-                                              style: TextStyle(
-                                                  fontFamily: 'Raleway',
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      ThemeColoursSeva().black),
-                                            ),
-                                            Text(
-                                              "${arr[productIndex].quantity.quantityValue} ${arr[productIndex].quantity.quantityMetric}",
-                                              style: TextStyle(
-                                                  fontFamily: 'Raleway',
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      ThemeColoursSeva().black),
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(height: 16),
-                                        Container(
-                                          height: 32,
-                                          width: 80,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                              border: Border.all(
-                                                  color: Colors.grey)),
-                                          child: RaisedButton(
-                                            color: Colors.white,
-                                            onPressed: () {},
-                                            child: const Text('Edit',
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.black,
-                                                  fontFamily: "Raleway",
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
+                                return Productcard(
+                                  arr[productIndex]
+                                  
+                                    );
                               }, childCount: arr.length),
                             ),
                           ],
