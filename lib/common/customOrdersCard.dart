@@ -46,16 +46,6 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                     color: ThemeColoursSeva().black),
               ),
               SizedBox(height: 10.0),
-              widget.order.otp != '0'
-                  ? Text(
-                      "OTP ${widget.order.otp}",
-                      style: TextStyle(
-                          fontFamily: "Raleway",
-                          fontSize: 16.5,
-                          fontWeight: FontWeight.w700,
-                          color: ThemeColoursSeva().black),
-                    )
-                  : Text("Served"),
               SizedBox(height: 10.0),
               Text(
                 "Order No. ${widget.order.orderNumber}",

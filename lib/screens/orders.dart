@@ -6,7 +6,7 @@ import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/orderModal.dart';
-import 'package:sevaBusiness/screens/common/customOrdersCard.dart';
+import 'package:sevaBusiness/common/customOrdersCard.dart';
 
 class OrdersScreen extends StatefulWidget {
   @override
@@ -81,7 +81,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             } else {
               return Container(
                 child: Center(
-                  child: Text("No orders available. Make one now!"),
+                  child: Text("No Customer Order!"),
                 ),
               );
             }
