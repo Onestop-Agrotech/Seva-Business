@@ -24,6 +24,7 @@ class _ProductsState extends State<Products> {
     super.initState();
     _labels = ['Vegetables', 'Fruits'];
   }
+//
 
   Future<List<StoreProduct>> _getProducts() async {
     StorageSharedPrefs p = new StorageSharedPrefs();
@@ -168,10 +169,7 @@ class _ProductsState extends State<Products> {
                               ),
                               delegate: SliverChildBuilderDelegate(
                                   (context, productIndex) {
-                                return Productcard(
-                                  arr[productIndex]
-                                  
-                                    );
+                                return Productcard(arr[productIndex]);
                               }, childCount: arr.length),
                             ),
                           ],
