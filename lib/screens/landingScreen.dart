@@ -6,9 +6,10 @@ class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: TopText(
-          txt: "Ganesh Fruits and Vegetables",
+          txt: "Fruits and Vegetables Store",
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
