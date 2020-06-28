@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/screens/landingScreen.dart';
+import 'package:sevaBusiness/screens/loadingScreen.dart';
 import 'package:sevaBusiness/screens/orders.dart';
-import 'package:sevaBusiness/screens/signIn.dart';
+import 'package:sevaBusiness/screens/login.dart';
 import 'package:sevaBusiness/screens/products.dart';
 
 void main() => runApp(MyApp());
@@ -19,9 +20,10 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xFFD8ECF1),
         scaffoldBackgroundColor: Color(0xFFF3F5F7),
       ),
-      initialRoute: '/landing',
+      initialRoute: '/loading',
       routes: {
         '/signIn': (context) => Signin(),
+        '/loading': (context) => LoadingScreen(),
         '/landing': (context) => LandingScreen(),
         '/products': (context) => Products(),
         '/orders': (context) => OrdersScreen()
