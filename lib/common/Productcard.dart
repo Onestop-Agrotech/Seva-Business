@@ -4,14 +4,12 @@ import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/storeProducts.dart';
 
 class Productcard extends StatelessWidget {
- 
-StoreProduct product;
-Productcard(this.product);
+  final StoreProduct product;
+  Productcard(this.product);
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Padding(
+    return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
         width: 180,
@@ -23,8 +21,7 @@ Productcard(this.product);
           children: <Widget>[
             Container(
               height: 130.0,
-              child: 
-              CachedNetworkImage(
+              child: CachedNetworkImage(
                 imageUrl: product.pictureUrl,
                 placeholder: (context, url) =>
                     Container(height: 50.0, child: Text("Loading...")),

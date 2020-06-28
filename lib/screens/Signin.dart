@@ -296,7 +296,7 @@ class _SigninState extends State<Signin> {
                           ],
                         )
                       : SizedBox(),
-                      _showInvalidOTP(),
+                  _showInvalidOTP(),
                   _showOTPLoader(),
                   _showLoader()
                 ],
