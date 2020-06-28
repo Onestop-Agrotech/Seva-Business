@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/common/landingCard.dart';
+import 'package:sevaBusiness/common/topText.dart';
 
 class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: TopText(
+          txt: "Ganesh Fruits and Vegetables",
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: <Widget>[
+          Icon(
+            Icons.person,
+            color: Colors.black,
+          )
+        ],
+      ),
       body: Center(
         child: Container(
-          height: 200.0,
+          height: 150.0,
           child: ListView.builder(
               itemCount: 2,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
+                List<String>arr=["orders","products"];
                 return Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: Row(
                     children: <Widget>[
-                      LandingCard(),
+                      LandingCard(landingName: arr[index],),
                       SizedBox(width:20.0)
                     ],
                   ),
