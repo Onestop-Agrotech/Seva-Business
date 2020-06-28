@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/common/landingCard.dart';
 import 'package:sevaBusiness/common/topText.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingScreen extends StatelessWidget {
+  _showLogoutOption(context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Logout from App'),
+            content: Text('You will not be shown to customers.'),
+            actions: <Widget>[
+              RaisedButton(
+                  onPressed: () async {
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    preferences.clear();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/signIn', (Route<dynamic> route) => false);
+                  },
+                  child: Text("LOGOUT")),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +38,12 @@ class LandingScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
-          Icon(
-            Icons.person,
-            color: Colors.black,
-          )
+          IconButton(
+            icon: Icon(Icons.person_pin),
+            onPressed: () {
+              _showLogoutOption(context);
+            },
+          ),
         ],
       ),
       body: Center(
