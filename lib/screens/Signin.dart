@@ -133,7 +133,7 @@ class _SigninState extends State<Signin> {
       await p.setToken(jsonBdy["token"]);
       await p.setId(jsonBdy["id"]);
       // grant access to the app
-      Navigator.pushReplacementNamed(context, '/products');
+      Navigator.pushReplacementNamed(context, '/landing');
     } else if (response.statusCode == 400) {
       // incorrect OTP
       setState(() {
