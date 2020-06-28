@@ -28,13 +28,15 @@ class LandingScreen extends StatelessWidget {
               itemCount: 2,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                List<String>arr=["orders","products"];
+                List<String> arr = ["orders", "products"];
                 return Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: Row(
                     children: <Widget>[
-                      LandingCard(landingName: arr[index],),
-                      SizedBox(width:20.0)
+                      LandingCard(
+                        landingName: arr[index],
+                      ),
+                      SizedBox(width: 20.0)
                     ],
                   ),
                 );
