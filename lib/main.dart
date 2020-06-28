@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/screens/landingScreen.dart';
 import 'package:sevaBusiness/screens/orders.dart';
-import 'package:sevaBusiness/screens/signIn.dart';
+import 'package:sevaBusiness/screens/register.dart';
 import 'package:sevaBusiness/screens/products.dart';
 
 void main() => runApp(MyApp());
