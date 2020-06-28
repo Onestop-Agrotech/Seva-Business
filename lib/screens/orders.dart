@@ -24,14 +24,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   _getOrderOfUser() async {
     StorageSharedPrefs p = new StorageSharedPrefs();
-    String id = await p.getId();
+    String username = await p.getUsername();
     String token = await p.getToken();
-    String url = APIService.ordersListAPI + "$id";
+    String url = APIService.ordersListAPI + "$username";
     Map<String, String> requestHeaders = {'x-auth-token': token};
     var response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       // got orders
-      return toOrdersFromJson(json.decode(response.body)["orders"]);
+      return toOrdersFromJson(json.decode(response.body)["msg"]);
       // print(json.decode(response.body)["orders"] is String);
     } else if (response.statusCode == 404) {
       // no orders
