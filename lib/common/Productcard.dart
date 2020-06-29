@@ -14,12 +14,9 @@ class Productcard extends StatefulWidget {
 }
 
 class _ProductcardState extends State<Productcard> {
-  bool _loaderSwitch;
-
   @override
   initState() {
     super.initState();
-    _loaderSwitch = false;
   }
 
   _markOutOfStock() async {
@@ -32,9 +29,7 @@ class _ProductcardState extends State<Productcard> {
     var response = await http.post(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       // successfully toggled Out Of Stock
-      setState(() {
-        _loaderSwitch = false;
-      });
+      print("success");
     } else if (response.statusCode == 404) {
       // no business user found
       print("404 error");
@@ -90,33 +85,6 @@ class _ProductcardState extends State<Productcard> {
             ],
           );
         });
-  }
-
-  _showLoaderForStockSwitch() {
-    if (!_loaderSwitch)
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Switch(
-            value: widget.product.outOfStock ? true : false,
-            onChanged: (val) {
-              // do something here
-              setState(() {
-                _loaderSwitch = true;
-              });
-              _markOutOfStock();
-            },
-            activeTrackColor: Colors.lightGreenAccent,
-            activeColor: Colors.green,
-          ),
-          Text(
-            widget.product.outOfStock ? "Mark In Stock" : "Mark Out Of Stock",
-            style: TextStyle(fontSize: 10.0, color: Colors.grey),
-          )
-        ],
-      );
-    else
-      return CircularProgressIndicator();
   }
 
   @override
@@ -198,7 +166,28 @@ class _ProductcardState extends State<Productcard> {
               ],
             ),
             SizedBox(height: 16),
-            _showLoaderForStockSwitch(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Switch(
+                  value: !widget.product.outOfStock ? true : false,
+                  onChanged: (val) {
+                    // do something here
+                    setState(() {
+                      // _loaderSwitch = true;
+                      widget.product.outOfStock = !val;
+                    });
+                    _markOutOfStock();
+                  },
+                  activeTrackColor: Colors.lightGreenAccent,
+                  activeColor: Colors.green,
+                ),
+                Text(
+                  !widget.product.outOfStock ? "In Stock" : "Out Of Stock",
+                  style: TextStyle(fontSize: 10.0, color: Colors.grey),
+                )
+              ],
+            ),
           ],
         ),
       ),
