@@ -108,7 +108,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
-          title: TopText(txt:"Orders"),
+          title: TopText(txt: "Orders"),
           leading: IconButton(
               icon: Icon(
                 Icons.keyboard_arrow_left,
