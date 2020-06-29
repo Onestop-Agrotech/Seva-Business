@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
-import 'package:sevaBusiness/models/orderModal.dart';
+import 'package:sevaBusiness/models/orders.dart';
 import 'package:sevaBusiness/common/customOrdersCard.dart';
 
 class OrdersScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
-import 'package:sevaBusiness/models/orderModal.dart';
-import 'package:sevaBusiness/screens/products.dart';
+import 'package:sevaBusiness/models/orders.dart';
+import 'package:sevaBusiness/screens/orderMoreDetails.dart';
 
 class CustomOrdersCard extends StatefulWidget {
   final OrderModel order;
@@ -112,7 +112,9 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Products(),
+                            builder: (context) => OrderMoreDetails(
+                              order: widget.order,
+                            ),
                           ));
                     },
                     child: Text("More Details",

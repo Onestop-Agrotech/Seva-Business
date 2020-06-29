@@ -15,7 +15,15 @@ class LandingCard extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               border: Border.all(color: Colors.grey)),
-          child: Center(child: Text("$landingName")),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              landingName == 'orders'
+                  ? Icon(Icons.view_agenda)
+                  : Icon(Icons.account_box),
+              Text("$landingName")
+            ],
+          ),
         ),
       ),
     );

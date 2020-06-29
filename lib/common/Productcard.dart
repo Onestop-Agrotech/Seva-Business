@@ -3,9 +3,59 @@ import 'package:flutter/material.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/storeProducts.dart';
 
-class Productcard extends StatelessWidget {
+class Productcard extends StatefulWidget {
   final StoreProduct product;
   Productcard(this.product);
+
+  @override
+  _ProductcardState createState() => _ProductcardState();
+}
+
+class _ProductcardState extends State<Productcard> {
+  _showEditOptions(context, product) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Edit Price and Quantity'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Price"),
+                    Text("Rs ${product.price}")
+                  ],
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Quantity"),
+                    Text("${product.quantity.quantityValue}")
+                  ],
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Value"),
+                    Text("${product.quantity.quantityMetric}")
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              RaisedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Edit")),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +64,22 @@ class Productcard extends StatelessWidget {
       child: Container(
         width: 180,
         height: 250,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            border: Border.all(color: Colors.grey)),
         child: Column(
           children: <Widget>[
-            Container(
-              height: 130.0,
-              child: CachedNetworkImage(
-                imageUrl: product.pictureUrl,
-                placeholder: (context, url) =>
-                    Container(height: 50.0, child: Text("Loading...")),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+            Material(
+              child: InkWell(
+                onTap: () {
+                  _showEditOptions(context, widget.product);
+                },
+                child: Container(
+                  height: 130.0,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.product.pictureUrl,
+                    placeholder: (context, url) =>
+                        Container(height: 50.0, child: Text("Loading...")),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 20.0),
@@ -34,7 +88,7 @@ class Productcard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    product.name,
+                    widget.product.name,
                     style: TextStyle(
                         fontFamily: 'Raleway',
                         fontSize: 15.0,
@@ -49,7 +103,7 @@ class Productcard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 5),
                   child: Text(
-                    product.description,
+                    widget.product.description,
                     style: TextStyle(
                         fontFamily: 'Raleway',
                         fontSize: 10.0,
@@ -64,7 +118,7 @@ class Productcard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text(
-                  "Rs ${product.price}",
+                  "Rs ${widget.product.price}",
                   style: TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 15.0,
@@ -72,7 +126,7 @@ class Productcard extends StatelessWidget {
                       color: ThemeColoursSeva().black),
                 ),
                 Text(
-                  "${product.quantity.quantityValue} ${product.quantity.quantityMetric}",
+                  "${widget.product.quantity.quantityValue} ${widget.product.quantity.quantityMetric}",
                   style: TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 15.0,
@@ -82,23 +136,23 @@ class Productcard extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16),
-            Container(
-              height: 32,
-              width: 80,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(color: Colors.grey)),
-              child: RaisedButton(
-                color: Colors.white,
-                onPressed: () {},
-                child: const Text('Edit',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontFamily: "Raleway",
-                    )),
-              ),
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Switch(
+                  value: false,
+                  onChanged: (val) {
+                    // do something here
+                  },
+                  activeTrackColor: Colors.lightGreenAccent,
+                  activeColor: Colors.green,
+                ),
+                Text(
+                  "Mark Out Of Stock",
+                  style: TextStyle(fontSize: 10.0, color: Colors.grey),
+                )
+              ],
+            ),
           ],
         ),
       ),
