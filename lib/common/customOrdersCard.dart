@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/orders.dart';
 import 'package:sevaBusiness/screens/orderMoreDetails.dart';
+import 'package:http/http.dart' as http;
 
 class CustomOrdersCard extends StatefulWidget {
   final OrderModel order;
@@ -23,6 +27,29 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
       setState(() {
         _less = true;
       });
+  }
+
+  _changeOrderStatusToReady() async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String token = await p.getToken();
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    String url =
+        "https://api.theonestop.co.in/api/orders/${widget.order.id}/orderStatus/";
+    var bodyJson = json.encode({"orderStatus": "Ready"});
+    var response = await http.put(url, headers: requestHeaders, body: bodyJson);
+    if (response.statusCode == 200) {
+      // successfully updated order status
+      print("success");
+    } else if (response.statusCode == 404) {
+      // no business user found
+      print("404 error");
+    } else if (response.statusCode == 500) {
+      // internal server error
+      print("500 error");
+    } else {
+      // throw some error exception
+      print("some other error");
+    }
   }
 
   @override
@@ -83,6 +110,7 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                           widget.order.orderStatus = "Ready";
                       });
                       // send POST request to server here
+                      _changeOrderStatusToReady();
                     },
                     activeTrackColor: Colors.lightGreenAccent,
                     activeColor: Colors.green,
