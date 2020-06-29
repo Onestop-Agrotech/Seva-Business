@@ -79,23 +79,40 @@ class Productcard extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16),
-            Container(
-              height: 32,
-              width: 80,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(color: Colors.grey)),
-              child: RaisedButton(
-                color: Colors.white,
-                onPressed: () {},
-                child: const Text('Edit',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontFamily: "Raleway",
-                    )),
-              ),
-            )
+            // Container(
+            //   height: 32,
+            //   width: 80,
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(5.0),
+            //       border: Border.all(color: Colors.grey)),
+            //   child: RaisedButton(
+            //     color: Colors.white,
+            //     onPressed: () {},
+            //     child: const Text('Edit',
+            //         style: TextStyle(
+            //           fontSize: 15,
+            //           color: Colors.black,
+            //           fontFamily: "Raleway",
+            //         )),
+            //   ),
+            // )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Switch(
+                  value: false,
+                  onChanged: (val) {
+                    // do something here
+                  },
+                  activeTrackColor: Colors.lightGreenAccent,
+                  activeColor: Colors.green,
+                ),
+                Text("Mark Out Of Stock", style: TextStyle(
+                  fontSize: 10.0,
+                  color: Colors.grey
+                ),)
+              ],
+            ),
           ],
         ),
       ),
