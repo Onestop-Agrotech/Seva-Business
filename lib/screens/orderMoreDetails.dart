@@ -14,6 +14,45 @@ class OrderMoreDetails extends StatefulWidget {
 }
 
 class _OrderMoreDetailsState extends State<OrderMoreDetails> {
+  _showOTPField() {
+    if (widget.order.orderStatus == "Ready") {
+      return Container(
+        color: Colors.white,
+        height: 100.0,
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(
+                "Enter OTP:",
+                style: TextStyle(
+                    fontSize: 15.0,
+                    color: ThemeColoursSeva().dkGreen,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: OTPTextField(
+                length: 6,
+                width: MediaQuery.of(context).size.width,
+                fieldWidth: 30,
+                style: TextStyle(fontSize: 20),
+                textFieldAlignment: MainAxisAlignment.spaceAround,
+                fieldStyle: FieldStyle.underline,
+                onCompleted: (pin) {},
+              ),
+            )
+          ],
+        ),
+      );
+    } else
+      return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,39 +93,7 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
           ),
         ],
       ),
-      floatingActionButton: Container(
-        color: Colors.white,
-        height: 100.0,
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                "Enter OTP:",
-                style: TextStyle(
-                    fontSize: 15.0,
-                    color: ThemeColoursSeva().dkGreen,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: OTPTextField(
-                length: 6,
-                width: MediaQuery.of(context).size.width,
-                fieldWidth: 30,
-                style: TextStyle(fontSize: 20),
-                textFieldAlignment: MainAxisAlignment.spaceAround,
-                fieldStyle: FieldStyle.underline,
-                onCompleted: (pin) {},
-              ),
-            )
-          ],
-        ),
-      ),
+      floatingActionButton: _showOTPField(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
