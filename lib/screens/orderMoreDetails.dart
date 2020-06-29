@@ -26,7 +26,16 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("STATUS: ${widget.order.orderStatus}"),
+          Text("Total Price: Rs ${widget.order.finalItemsPrice}",style: TextStyle(
+            fontSize: 18.0,
+            color: Colors.black
+          )),
+          SizedBox(height: 10.0),
+          Text("Token: ${widget.order.tokenNumber}",style: TextStyle(
+            fontSize: 16.0,
+            color: Colors.black
+          )),
+          SizedBox(height: 10.0),
           Expanded(
             child: ListView.builder(
                 itemCount: widget.order.items.length,
@@ -35,8 +44,11 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
                     children: <Widget>[
                       OrderDetailsCard(
                         item: widget.order.items[index],
+                        counter: "${index + 1}",
                       ),
-                      SizedBox(height: 10.0,)
+                      SizedBox(
+                        height: 10.0,
+                      )
                     ],
                   );
                 }),
