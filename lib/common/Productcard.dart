@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/storeProducts.dart';
+import 'package:http/http.dart' as http;
 
 class Productcard extends StatefulWidget {
   final StoreProduct product;
@@ -12,6 +14,34 @@ class Productcard extends StatefulWidget {
 }
 
 class _ProductcardState extends State<Productcard> {
+  @override
+  initState() {
+    super.initState();
+  }
+
+  _markOutOfStock() async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String username = await p.getUsername();
+    String token = await p.getToken();
+    String url =
+        "https://api.theonestop.co.in/api/businesses/$username/${widget.product.name}/out-of-stock";
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    var response = await http.post(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // successfully toggled Out Of Stock
+      print("success");
+    } else if (response.statusCode == 404) {
+      // no business user found
+      print("404 error");
+    } else if (response.statusCode == 500) {
+      // internal server error
+      print("500 error");
+    } else {
+      // throw some error exception
+      print("some other error");
+    }
+  }
+
   _showEditOptions(context, product) {
     showDialog(
         context: context,
@@ -140,15 +170,20 @@ class _ProductcardState extends State<Productcard> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Switch(
-                  value: false,
+                  value: !widget.product.outOfStock ? true : false,
                   onChanged: (val) {
                     // do something here
+                    setState(() {
+                      // _loaderSwitch = true;
+                      widget.product.outOfStock = !val;
+                    });
+                    _markOutOfStock();
                   },
                   activeTrackColor: Colors.lightGreenAccent,
                   activeColor: Colors.green,
                 ),
                 Text(
-                  "Mark Out Of Stock",
+                  !widget.product.outOfStock ? "In Stock" : "Out Of Stock",
                   style: TextStyle(fontSize: 10.0, color: Colors.grey),
                 )
               ],
