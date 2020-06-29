@@ -18,7 +18,9 @@ class LandingCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              landingName == 'orders' ? Icon(Icons.view_agenda): Icon(Icons.account_box),
+              landingName == 'orders'
+                  ? Icon(Icons.view_agenda)
+                  : Icon(Icons.account_box),
               Text("$landingName")
             ],
           ),

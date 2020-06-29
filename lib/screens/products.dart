@@ -47,8 +47,10 @@ class _ProductsState extends State<Products> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
-              child: AppBar(
-          title: TopText(txt: 'My Products',),
+        child: AppBar(
+          title: TopText(
+            txt: 'My Products',
+          ),
           leading: IconButton(
               icon: Icon(
                 Icons.keyboard_arrow_left,
@@ -124,18 +126,13 @@ class _ProductsState extends State<Products> {
                               crossAxisCount: 2,
                               childAspectRatio: heightOfScreen > 850
                                   ? MediaQuery.of(context).size.width /
-                                      (MediaQuery.of(context).size.height /
-                                          1.5)
+                                      (MediaQuery.of(context).size.height / 1.5)
                                   : heightOfScreen > 700
                                       ? MediaQuery.of(context).size.width /
-                                          (MediaQuery.of(context)
-                                                  .size
-                                                  .height /
+                                          (MediaQuery.of(context).size.height /
                                               1.2)
                                       : MediaQuery.of(context).size.width /
-                                          (MediaQuery.of(context)
-                                                  .size
-                                                  .height /
+                                          (MediaQuery.of(context).size.height /
                                               1.1),
                             ),
                             delegate: SliverChildBuilderDelegate(
