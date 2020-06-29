@@ -26,13 +26,18 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Order STATUS"),
+          Text("STATUS: ${widget.order.orderStatus}"),
           Expanded(
             child: ListView.builder(
                 itemCount: widget.order.items.length,
                 itemBuilder: (context, index) {
-                  return OrderDetailsCard(
-                    pURL: widget.order.items[index].itemPictureURL,
+                  return Column(
+                    children: <Widget>[
+                      OrderDetailsCard(
+                        item: widget.order.items[index],
+                      ),
+                      SizedBox(height: 10.0,)
+                    ],
                   );
                 }),
           ),
