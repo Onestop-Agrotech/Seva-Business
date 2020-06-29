@@ -81,8 +81,6 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                         // widget.order.orderStatus="Ready";
                         if (widget.order.orderStatus == "Processing")
                           widget.order.orderStatus = "Ready";
-                        else
-                          widget.order.orderStatus = "Processing";
                       });
                       // send POST request to server here
                     },
@@ -115,7 +113,9 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                   style: TextStyle(
                       fontFamily: "Raleway",
                       fontSize: 17.0,
-                      color: Colors.deepOrange)),
+                      color: widget.order.orderStatus == "Processing"
+                          ? Colors.deepOrange
+                          : ThemeColoursSeva().lgGreen)),
               SizedBox(height: 10.0),
               FlatButton(
                 shape: Border.all(width: 0.2),
