@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sevaBusiness/common/orderDetails.dart';
 import 'package:sevaBusiness/common/topText.dart';
 import 'package:sevaBusiness/models/orders.dart';
 
@@ -13,6 +14,7 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: TopText(
           txt: "Order ${widget.order.orderNumber}",
@@ -20,6 +22,21 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text("Order STATUS"),
+          Expanded(
+            child: ListView.builder(
+                itemCount: widget.order.items.length,
+                itemBuilder: (context, index) {
+                  return OrderDetailsCard(
+                    pURL: widget.order.items[index].itemPictureURL,
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }
