@@ -38,20 +38,10 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Text(
-                "${widget.order.storeName}",
+                "No. ${widget.order.orderNumber}",
                 style: TextStyle(
                     fontFamily: "Raleway",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: ThemeColoursSeva().black),
-              ),
-              SizedBox(height: 10.0),
-              SizedBox(height: 10.0),
-              Text(
-                "Order No. ${widget.order.orderNumber}",
-                style: TextStyle(
-                    fontFamily: "Raleway",
-                    fontSize: 13,
+                    fontSize: 15,
                     fontWeight: FontWeight.w500,
                     color: ThemeColoursSeva().black),
               ),
@@ -78,16 +68,35 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                               color: ThemeColoursSeva().black)),
                 ],
               ),
+              SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Switch(
+                    value:
+                        widget.order.orderStatus == "Processing" ? false : true,
+                    onChanged: (val) {
+                      // change order status here
+                    },
+                    activeTrackColor: Colors.lightGreenAccent,
+                    activeColor: Colors.green,
+                  ),
+                  Text(
+                    "Mark as PACKED",
+                    style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                  )
+                ],
+              ),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Text(
-                "TOKEN ${widget.order.tokenNumber}",
+                "T ${widget.order.tokenNumber}",
                 style: TextStyle(
                     fontFamily: "Raleway",
-                    fontSize: 13.5,
+                    fontSize: 14.5,
                     fontWeight: FontWeight.w700,
                     color: ThemeColoursSeva().black),
               ),
@@ -98,33 +107,23 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                       fontSize: 17.0,
                       color: Colors.deepOrange)),
               SizedBox(height: 10.0),
-              Row(
-                children: <Widget>[
-                  Text("${widget.order.orderType}",
-                      style: TextStyle(
-                          fontFamily: "Raleway",
-                          fontSize: 14.0,
-                          color: ThemeColoursSeva().black)),
-                  SizedBox(width: 10.0),
-                  FlatButton(
-                    shape: Border.all(width: 0.2),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OrderMoreDetails(
-                              order: widget.order,
-                            ),
-                          ));
-                    },
-                    child: Text("More Details",
-                        style: TextStyle(
-                          fontFamily: "Raleway",
-                          fontSize: 14.0,
-                        )),
-                    textColor: ThemeColoursSeva().dkGreen,
-                  )
-                ],
+              FlatButton(
+                shape: Border.all(width: 0.2),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OrderMoreDetails(
+                          order: widget.order,
+                        ),
+                      ));
+                },
+                child: Text("More Details",
+                    style: TextStyle(
+                      fontFamily: "Raleway",
+                      fontSize: 14.0,
+                    )),
+                textColor: ThemeColoursSeva().dkGreen,
               ),
             ],
           ),

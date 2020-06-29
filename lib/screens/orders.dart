@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
+import 'package:sevaBusiness/common/topText.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/orders.dart';
@@ -107,6 +108,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
+          title: TopText(txt:"Orders"),
           leading: IconButton(
               icon: Icon(
                 Icons.keyboard_arrow_left,
