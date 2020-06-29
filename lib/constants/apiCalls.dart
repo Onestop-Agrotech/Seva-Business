@@ -1,5 +1,5 @@
 class APIService {
-  static final String _sevaApi = "https://frozen-sands-29962.herokuapp.com/api";
+  static final String _sevaApi = "https://api.theonestop.co.in/api";
 
   // BUSINESSES
   static final String loginMobile = "$_sevaApi/businesses/loginMobile/";
@@ -10,5 +10,5 @@ class APIService {
   // OTHERS
   // loading.dart - _sendReqToServer function
   static final String mainTokenAPI =
-      "https://frozen-sands-29962.herokuapp.com/token";
+      "https://api.theonestop.co.in/token";
 }
