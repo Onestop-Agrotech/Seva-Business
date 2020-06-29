@@ -12,13 +12,40 @@ class Productcard extends StatefulWidget {
 }
 
 class _ProductcardState extends State<Productcard> {
-  _showEditOptions(context) {
+  _showEditOptions(context, product) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: Text('Edit Price and Quantity'),
-            content: Text('You will edit here.'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Price"),
+                    Text("Rs ${product.price}")
+                  ],
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Quantity"),
+                    Text("${product.quantity.quantityValue}")
+                  ],
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Value"),
+                    Text("${product.quantity.quantityMetric}")
+                  ],
+                ),
+              ],
+            ),
             actions: <Widget>[
               RaisedButton(
                   onPressed: () {
@@ -42,7 +69,7 @@ class _ProductcardState extends State<Productcard> {
             Material(
               child: InkWell(
                 onTap: () {
-                  _showEditOptions(context);
+                  _showEditOptions(context, widget.product);
                 },
                 child: Container(
                   height: 130.0,
