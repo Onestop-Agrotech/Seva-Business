@@ -96,33 +96,38 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                 ],
               ),
               SizedBox(height: 10.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Switch(
-                    value:
-                        widget.order.orderStatus == "Processing" ? false : true,
-                    onChanged: (val) {
-                      // change order status here
-                      setState(() {
-                        // widget.order.orderStatus="Ready";
-                        if (widget.order.orderStatus == "Processing")
-                          widget.order.orderStatus = "Ready";
-                      });
-                      // send POST request to server here
-                      _changeOrderStatusToReady();
-                    },
-                    activeTrackColor: Colors.lightGreenAccent,
-                    activeColor: Colors.green,
-                  ),
-                  Text(
-                    widget.order.orderStatus == "Processing"
-                        ? "Mark as PACKED"
-                        : "PACKED",
-                    style: TextStyle(fontSize: 12.0, color: Colors.grey),
-                  )
-                ],
-              ),
+              widget.order.orderStatus != "finished"
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Switch(
+                          value: widget.order.orderStatus == "Processing"
+                              ? false
+                              : true,
+                          onChanged: (val) {
+                            // change order status here
+                            setState(() {
+                              // widget.order.orderStatus="Ready";
+                              if (widget.order.orderStatus == "Processing")
+                                widget.order.orderStatus = "Ready";
+                            });
+                            // send POST request to server here
+                            _changeOrderStatusToReady();
+                          },
+                          activeTrackColor: Colors.lightGreenAccent,
+                          activeColor: Colors.green,
+                        ),
+                        Text(
+                          widget.order.orderStatus == "Processing"
+                              ? "Mark as PACKED"
+                              : "PACKED",
+                          style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                        )
+                      ],
+                    )
+                  : Text("Order Completed",
+                      style: TextStyle(
+                          fontSize: 16.0, color: ThemeColoursSeva().dkGreen)),
             ],
           ),
           Column(
