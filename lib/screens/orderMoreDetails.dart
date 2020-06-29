@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/common/orderDetails.dart';
 import 'package:sevaBusiness/common/topText.dart';
+import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/orders.dart';
+import 'package:http/http.dart' as http;
 
 class OrderMoreDetails extends StatefulWidget {
   final OrderModel order;
@@ -14,6 +19,47 @@ class OrderMoreDetails extends StatefulWidget {
 }
 
 class _OrderMoreDetailsState extends State<OrderMoreDetails> {
+  bool _loading = false;
+
+  _loader() {
+    if (_loading)
+      return CircularProgressIndicator();
+    else
+      return _showOTPField();
+  }
+
+  _confirmOrderWithOTP(otp) async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String token = await p.getToken();
+    Map<String, String> requestHeaders = {
+      'x-auth-token': token,
+      "Content-Type": "application/json"
+    };
+    String url = APIService.confirmOrderAPI;
+    var jsonBody = json.encode({"orderId": "${widget.order.id}", "otp": otp});
+    var response =
+        await http.post(url, headers: requestHeaders, body: jsonBody);
+    setState(() {
+      _loading = false;
+    });
+    if (response.statusCode == 200) {
+      // successful
+      print("successful");
+    } else if (response.statusCode == 401) {
+      // incorrect otp
+      print("incorrect");
+    } else if (response.statusCode == 404) {
+      // invalid order id
+      print("invalid order id");
+    } else if (response.statusCode == 500) {
+      // internal server error
+      print("internal server error");
+    } else {
+      // some other error
+      print("some other error");
+    }
+  }
+
   _showOTPField() {
     if (widget.order.orderStatus == "Ready") {
       return Container(
@@ -43,7 +89,12 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
                 style: TextStyle(fontSize: 20),
                 textFieldAlignment: MainAxisAlignment.spaceAround,
                 fieldStyle: FieldStyle.underline,
-                onCompleted: (pin) {},
+                onCompleted: (pin) {
+                  _confirmOrderWithOTP(pin);
+                  setState(() {
+                    _loading = true;
+                  });
+                },
               ),
             )
           ],
@@ -93,7 +144,7 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
           ),
         ],
       ),
-      floatingActionButton: _showOTPField(),
+      floatingActionButton: _loader(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

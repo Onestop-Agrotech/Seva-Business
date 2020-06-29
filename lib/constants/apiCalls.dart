@@ -7,6 +7,9 @@ class APIService {
   static final String businessProductsListAPI = "$_sevaApi/businesses/";
   static final String ordersListAPI = "$_sevaApi/orders/business/";
 
+  // ORDERS
+  static final String confirmOrderAPI = "$_sevaApi/orders/confirm/order";
+
   // OTHERS
   // loading.dart - _sendReqToServer function
   static final String mainTokenAPI = "https://api.theonestop.co.in/token";
