@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
 import 'package:sevaBusiness/common/Productcard.dart';
+import 'package:sevaBusiness/common/topText.dart';
 import 'package:sevaBusiness/constants/apiCalls.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/graphics/greenBg.dart';
@@ -45,148 +46,118 @@ class _ProductsState extends State<Products> {
     var heightOfScreen = size.longestSide;
     return Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-      body: CustomPaint(
-        painter: GreenPaintingBgProducts(),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "My Products",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: ThemeColoursSeva().dkGreen,
-                      fontFamily: "Raleway",
-                    ),
-                  ),
-                ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+              child: AppBar(
+          title: TopText(txt: 'My Products',),
+          leading: IconButton(
+              icon: Icon(
+                Icons.keyboard_arrow_left,
+                color: ThemeColoursSeva().black,
+                size: 40.0,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                      child: Container(
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Search...",
-                          hintStyle: TextStyle(color: Colors.black),
-                        ),
+              onPressed: () {
+                // go to store list
+                Navigator.pop(context);
+              }),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          // title: Center(Title: 'My Orders'),
+          centerTitle: true,
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              for (int i = 0; i < _labels.length; i++)
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _categorySelectedIndex = i;
+                    });
+                  },
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        _labels[i],
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
+                          fontSize: 16.5,
+                          color: i == _categorySelectedIndex
+                              ? ThemeColoursSeva().dkGreen
+                              : ThemeColoursSeva().vlgGreen,
+                          decoration: i == _categorySelectedIndex
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
                           fontFamily: "Raleway",
                         ),
                       ),
-                    ),
-                  )),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                for (int i = 0; i < _labels.length; i++)
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _categorySelectedIndex = i;
-                      });
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          _labels[i],
-                          style: TextStyle(
-                            fontSize: 16.5,
-                            color: i == _categorySelectedIndex
-                                ? ThemeColoursSeva().dkGreen
-                                : ThemeColoursSeva().vlgGreen,
-                            decoration: i == _categorySelectedIndex
-                                ? TextDecoration.underline
-                                : TextDecoration.none,
-                            fontFamily: "Raleway",
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Icon(
-                          Icons.lens,
-                          color: i == _categorySelectedIndex
-                              ? Colors.black
-                              : Colors.grey,
-                          size: 15.0,
-                        )
-                      ],
-                    ),
-                  )
-              ],
-            ),
-            SizedBox(height: 10),
-            FutureBuilder(
-              future: _getProducts(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<StoreProduct> arr = snapshot.data;
-                  if (arr.length > 0) {
-                    return Expanded(
-                      child: Scrollbar(
-                        child: CustomScrollView(
-                          shrinkWrap: true,
-                          slivers: <Widget>[
-                            SliverGrid(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: heightOfScreen > 850
-                                    ? MediaQuery.of(context).size.width /
-                                        (MediaQuery.of(context).size.height /
-                                            1.5)
-                                    : heightOfScreen > 700
-                                        ? MediaQuery.of(context).size.width /
-                                            (MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                1.2)
-                                        : MediaQuery.of(context).size.width /
-                                            (MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                1.1),
-                              ),
-                              delegate: SliverChildBuilderDelegate(
-                                  (context, productIndex) {
-                                return Productcard(arr[productIndex]);
-                              }, childCount: arr.length),
+                      SizedBox(height: 10),
+                      Icon(
+                        Icons.lens,
+                        color: i == _categorySelectedIndex
+                            ? Colors.black
+                            : Colors.grey,
+                        size: 15.0,
+                      )
+                    ],
+                  ),
+                )
+            ],
+          ),
+          SizedBox(height: 10),
+          FutureBuilder(
+            future: _getProducts(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<StoreProduct> arr = snapshot.data;
+                if (arr.length > 0) {
+                  return Expanded(
+                    child: Scrollbar(
+                      child: CustomScrollView(
+                        shrinkWrap: true,
+                        slivers: <Widget>[
+                          SliverGrid(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: heightOfScreen > 850
+                                  ? MediaQuery.of(context).size.width /
+                                      (MediaQuery.of(context).size.height /
+                                          1.5)
+                                  : heightOfScreen > 700
+                                      ? MediaQuery.of(context).size.width /
+                                          (MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              1.2)
+                                      : MediaQuery.of(context).size.width /
+                                          (MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              1.1),
                             ),
-                          ],
-                        ),
+                            delegate: SliverChildBuilderDelegate(
+                                (context, productIndex) {
+                              return Productcard(arr[productIndex]);
+                            }, childCount: arr.length),
+                          ),
+                        ],
                       ),
-                    );
-                  } else {
-                    return Center(
-                      child: Text("No Shops Found"),
-                    );
-                  }
-                } else
-                  return Center(child: CircularProgressIndicator());
-              },
-            ),
-          ],
-        ),
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Text("No Shops Found"),
+                  );
+                }
+              } else
+                return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ],
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:sevaBusiness/models/orders.dart';
 import 'package:sevaBusiness/screens/orderMoreDetails.dart';
-import 'package:sevaBusiness/screens/products.dart';
 
 class CustomOrdersCard extends StatefulWidget {
   final OrderModel order;
