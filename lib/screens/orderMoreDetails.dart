@@ -44,10 +44,42 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
     });
     if (response.statusCode == 200) {
       // successful
-      print("successful");
+      setState(() {
+        widget.order.orderStatus="finished";
+      });
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Order Finished"),
+              content: Text('You have succesfully finished an order.'),
+              actions: <Widget>[
+                RaisedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/orders');
+                    },
+                    child: Text("OK")),
+              ],
+            );
+          });
     } else if (response.statusCode == 401) {
       // incorrect otp
-      print("incorrect");
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Incorrect OTP"),
+              content: Text('Please renter otp.'),
+              actions: <Widget>[
+                RaisedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("OK")),
+              ],
+            );
+          });
     } else if (response.statusCode == 404) {
       // invalid order id
       print("invalid order id");

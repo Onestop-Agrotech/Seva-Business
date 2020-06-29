@@ -125,7 +125,9 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                         )
                       ],
                     )
-                  : Text("Order Completed"),
+                  : Text("Order Completed",
+                      style: TextStyle(
+                          fontSize: 16.0, color: ThemeColoursSeva().dkGreen)),
             ],
           ),
           Column(
