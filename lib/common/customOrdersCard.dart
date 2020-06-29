@@ -77,12 +77,22 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                         widget.order.orderStatus == "Processing" ? false : true,
                     onChanged: (val) {
                       // change order status here
+                      setState(() {
+                        // widget.order.orderStatus="Ready";
+                        if (widget.order.orderStatus == "Processing")
+                          widget.order.orderStatus = "Ready";
+                        else
+                          widget.order.orderStatus = "Processing";
+                      });
+                      // send POST request to server here
                     },
                     activeTrackColor: Colors.lightGreenAccent,
                     activeColor: Colors.green,
                   ),
                   Text(
-                    "Mark as PACKED",
+                    widget.order.orderStatus == "Processing"
+                        ? "Mark as PACKED"
+                        : "PACKED",
                     style: TextStyle(fontSize: 12.0, color: Colors.grey),
                   )
                 ],
