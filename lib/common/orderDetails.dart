@@ -34,7 +34,8 @@ class OrderDetailsCard extends StatelessWidget {
                 style: TextStyle(
                     color: ThemeColoursSeva().dkGreen, fontSize: 18.0)),
             SizedBox(height: 10.0),
-            Text("${item.quantity.quantityValue} ${item.quantity.quantityMetric}    x${item.totalQuantity}",
+            Text(
+                "${item.quantity.quantityValue} ${item.quantity.quantityMetric}    x${item.totalQuantity}",
                 style: TextStyle(
                     color: ThemeColoursSeva().dkGreen, fontSize: 18.0))
           ],

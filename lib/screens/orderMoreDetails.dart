@@ -45,7 +45,7 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
     if (response.statusCode == 200) {
       // successful
       setState(() {
-        widget.order.orderStatus="finished";
+        widget.order.orderStatus = "finished";
       });
       showDialog(
           context: context,
