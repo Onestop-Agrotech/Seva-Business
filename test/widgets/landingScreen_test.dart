@@ -6,8 +6,8 @@ void main() {
   testWidgets('Landing screen test', (WidgetTester tester) async {
     await tester.pumpWidget(buildTestableWidget(LandingScreen()));
 
-    final products = find.text('products');
-    final orders = find.text('orders');
+    final products = find.text('Products');
+    final orders = find.text('Orders');
 
     expect(products, findsOneWidget);
     expect(orders, findsOneWidget);

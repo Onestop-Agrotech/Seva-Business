@@ -7,6 +7,7 @@ import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:sevaBusiness/models/storeProducts.dart';
+import 'package:sevaBusiness/custom_icons.dart';
 
 class Products extends StatefulWidget {
   Products({Key key}) : super(key: key);
@@ -75,11 +76,19 @@ class _ProductsState extends State<Products> {
           bottom: TabBar(tabs: [
             Tab(
               child: Text("Vegetables"),
-              icon: Icon(Icons.free_breakfast),
+              icon: Icon(
+                CustomIcons.carrot,
+                color: Colors.orange,
+                size: 35.0,
+              ),
             ),
             Tab(
               child: Text("Fruits"),
-              icon: Icon(Icons.view_array),
+              icon: Icon(
+                CustomIcons.fruit,
+                color: Colors.red,
+                size: 35.0,
+              ),
             )
           ]),
           title: TopText(
