@@ -86,10 +86,9 @@ class LandingScreen extends StatelessWidget {
               if (snapshot.hasData) {
                 return Text("${snapshot.data}",
                     style: TextStyle(
-                      fontSize: 18.0,
-                      color: ThemeColoursSeva().black,
-                      fontWeight: FontWeight.normal
-                    ),
+                        fontSize: 18.0,
+                        color: ThemeColoursSeva().black,
+                        fontWeight: FontWeight.normal),
                     overflow: TextOverflow.ellipsis);
               } else
                 return Container();
