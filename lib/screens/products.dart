@@ -137,7 +137,14 @@ class _ProductsState extends State<Products> {
                             ),
                             delegate: SliverChildBuilderDelegate(
                                 (context, productIndex) {
-                              return Productcard(arr[productIndex]);
+                              if (_categorySelectedIndex == 0 &&
+                                  arr[productIndex].type == "vegetable")
+                                return Productcard(arr[productIndex]);
+                              else if (_categorySelectedIndex == 1 &&
+                                  arr[productIndex].type == "fruit")
+                                return Productcard(arr[productIndex]);
+                              else
+                                return Container();
                             }, childCount: arr.length),
                           ),
                         ],
@@ -146,7 +153,7 @@ class _ProductsState extends State<Products> {
                   );
                 } else {
                   return Center(
-                    child: Text("No Shops Found"),
+                    child: Text("No Products Found."),
                   );
                 }
               } else

@@ -135,23 +135,23 @@ class LandingScreen extends StatelessWidget {
                 }),
           ),
           SizedBox(height: 30.0),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Container(
-                  height: 150.0,
-                  child: LandingCard(
-                      landingName: "payments",
-                      icon: Icon(
-                        Icons.payment,
-                        size: 40.0,
-                        color: ThemeColoursSeva().dkGreen,
-                      )),
-                ),
-              )
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     Padding(
+          //       padding: const EdgeInsets.only(left: 20.0),
+          //       child: Container(
+          //         height: 150.0,
+          //         child: LandingCard(
+          //             landingName: "payments",
+          //             icon: Icon(
+          //               Icons.payment,
+          //               size: 40.0,
+          //               color: ThemeColoursSeva().dkGreen,
+          //             )),
+          //       ),
+          //     )
+          //   ],
+          // ),
         ],
       ),
     );
