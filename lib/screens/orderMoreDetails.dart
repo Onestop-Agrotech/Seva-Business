@@ -48,6 +48,7 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
         widget.order.orderStatus = "finished";
       });
       showDialog(
+        barrierDismissible: false,
           context: context,
           builder: (context) {
             return AlertDialog(
