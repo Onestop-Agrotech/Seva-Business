@@ -16,13 +16,13 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
-  List<String> _labels;
-  int _categorySelectedIndex = 0;
+  // List<String> _labels;
+  // int _categorySelectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _labels = ['Vegetables', 'Fruits'];
+    // _labels = ['Vegetables', 'Fruits'];
   }
 //
 
@@ -70,44 +70,44 @@ class _ProductsState extends State<Products> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              for (int i = 0; i < _labels.length; i++)
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _categorySelectedIndex = i;
-                    });
-                  },
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        _labels[i],
-                        style: TextStyle(
-                          fontSize: 16.5,
-                          color: i == _categorySelectedIndex
-                              ? ThemeColoursSeva().dkGreen
-                              : ThemeColoursSeva().vlgGreen,
-                          decoration: i == _categorySelectedIndex
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
-                          fontFamily: "Raleway",
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Icon(
-                        Icons.lens,
-                        color: i == _categorySelectedIndex
-                            ? Colors.black
-                            : Colors.grey,
-                        size: 15.0,
-                      )
-                    ],
-                  ),
-                )
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: [
+          //     for (int i = 0; i < _labels.length; i++)
+          //       GestureDetector(
+          //         onTap: () {
+          //           setState(() {
+          //             _categorySelectedIndex = i;
+          //           });
+          //         },
+          //         child: Column(
+          //           children: <Widget>[
+          //             Text(
+          //               _labels[i],
+          //               style: TextStyle(
+          //                 fontSize: 16.5,
+          //                 color: i == _categorySelectedIndex
+          //                     ? ThemeColoursSeva().dkGreen
+          //                     : ThemeColoursSeva().vlgGreen,
+          //                 decoration: i == _categorySelectedIndex
+          //                     ? TextDecoration.underline
+          //                     : TextDecoration.none,
+          //                 fontFamily: "Raleway",
+          //               ),
+          //             ),
+          //             SizedBox(height: 10),
+          //             Icon(
+          //               Icons.lens,
+          //               color: i == _categorySelectedIndex
+          //                   ? Colors.black
+          //                   : Colors.grey,
+          //               size: 15.0,
+          //             )
+          //           ],
+          //         ),
+          //       )
+          //   ],
+          // ),
           SizedBox(height: 10),
           FutureBuilder(
             future: _getProducts(),
@@ -137,14 +137,7 @@ class _ProductsState extends State<Products> {
                             ),
                             delegate: SliverChildBuilderDelegate(
                                 (context, productIndex) {
-                              if (_categorySelectedIndex == 0 &&
-                                  arr[productIndex].type == "vegetable")
-                                return Productcard(arr[productIndex]);
-                              else if (_categorySelectedIndex == 1 &&
-                                  arr[productIndex].type == "fruit")
-                                return Productcard(arr[productIndex]);
-                              else
-                                return Container();
+                              return Productcard(arr[productIndex]);
                             }, childCount: arr.length),
                           ),
                         ],
