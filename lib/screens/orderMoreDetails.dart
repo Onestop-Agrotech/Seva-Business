@@ -48,6 +48,7 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
         widget.order.orderStatus = "finished";
       });
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -57,7 +58,8 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
                 RaisedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.pushReplacementNamed(context, '/orders');
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/orders', ModalRoute.withName('/landing'));
                     },
                     child: Text("OK")),
               ],
@@ -96,14 +98,14 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
     if (widget.order.orderStatus == "Ready") {
       return Container(
         color: Colors.white,
-        height: 100.0,
+        height: 150.0,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 30.0),
               child: Text(
                 "Enter OTP:",
                 style: TextStyle(
@@ -113,7 +115,8 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12.0),
+              padding:
+                  const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
               child: OTPTextField(
                 length: 6,
                 width: MediaQuery.of(context).size.width,
