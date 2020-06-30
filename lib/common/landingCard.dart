@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class LandingCard extends StatelessWidget {
   final String landingName;
-  LandingCard({this.landingName});
+  final Icon icon;
+  LandingCard({this.landingName, this.icon});
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -12,16 +13,17 @@ class LandingCard extends StatelessWidget {
         },
         child: Container(
           width: MediaQuery.of(context).size.width * 0.4,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              border: Border.all(color: Colors.grey)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              landingName == 'orders'
-                  ? Icon(Icons.view_agenda)
-                  : Icon(Icons.account_box),
-              Text("$landingName")
+              icon,
+              Text(
+                "${landingName[0].toUpperCase()}${landingName.substring(1)}",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
             ],
           ),
         ),
