@@ -57,7 +57,7 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
                 RaisedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.pushReplacementNamed(context, '/orders');
+                      Navigator.pushNamedAndRemoveUntil(context, '/orders', ModalRoute.withName('/landing'));
                     },
                     child: Text("OK")),
               ],
