@@ -76,11 +76,19 @@ class _ProductsState extends State<Products> {
           bottom: TabBar(tabs: [
             Tab(
               child: Text("Vegetables"),
-              icon: Icon(CustomIcons.carrot, color: Colors.orange, size: 35.0,),
+              icon: Icon(
+                CustomIcons.carrot,
+                color: Colors.orange,
+                size: 35.0,
+              ),
             ),
             Tab(
               child: Text("Fruits"),
-              icon: Icon(CustomIcons.fruit, color: Colors.red, size: 35.0,),
+              icon: Icon(
+                CustomIcons.fruit,
+                color: Colors.red,
+                size: 35.0,
+              ),
             )
           ]),
           title: TopText(
