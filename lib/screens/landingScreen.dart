@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
+import 'package:sevaBusiness/constants/apiCalls.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/common/landingCard.dart';
 import 'package:sevaBusiness/common/topText.dart';
@@ -12,6 +18,23 @@ class LandingItem {
 }
 
 class LandingScreen extends StatelessWidget {
+  _getName() async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String id = await p.getId();
+    String token = await p.getToken();
+    String url = APIService.businessNameAPI + "$id";
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    var response = await http.get(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // got name
+      return json.decode(response.body);
+    } else if (response.statusCode == 404) {
+      // no name
+      print("404 error");
+    } else
+      throw Exception("Server error");
+  }
+
   _showLogoutOption(context) {
     showDialog(
         context: context,
@@ -57,12 +80,21 @@ class LandingScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           SizedBox(height: 40.0),
-          Text("Fruits and Vegetables Shop",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: ThemeColoursSeva().black,
-              ),
-              overflow: TextOverflow.ellipsis),
+          FutureBuilder(
+            future: _getName(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text("${snapshot.data}",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: ThemeColoursSeva().black,
+                      fontWeight: FontWeight.normal
+                    ),
+                    overflow: TextOverflow.ellipsis);
+              } else
+                return Container();
+            },
+          ),
           SizedBox(height: 40.0),
           Container(
             height: 150.0,
@@ -72,9 +104,21 @@ class LandingScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   // List<String> arr = ["orders", "products", "payments"];
                   List<LandingItem> items = [];
-                  LandingItem orders = new LandingItem(name: "orders", icon: Icon(Icons.view_agenda, size: 40.0, color: ThemeColoursSeva().dkGreen,));
+                  LandingItem orders = new LandingItem(
+                      name: "orders",
+                      icon: Icon(
+                        Icons.view_agenda,
+                        size: 40.0,
+                        color: ThemeColoursSeva().dkGreen,
+                      ));
                   items.add(orders);
-                  LandingItem products = new LandingItem(name: "products", icon: Icon(Icons.account_box, size: 40.0, color: ThemeColoursSeva().dkGreen,));
+                  LandingItem products = new LandingItem(
+                      name: "products",
+                      icon: Icon(
+                        Icons.account_box,
+                        size: 40.0,
+                        color: ThemeColoursSeva().dkGreen,
+                      ));
                   items.add(products);
                   return Padding(
                     padding: const EdgeInsets.only(left: 20.0),
@@ -98,9 +142,12 @@ class LandingScreen extends StatelessWidget {
                 child: Container(
                   height: 150.0,
                   child: LandingCard(
-                    landingName: "payments",
-                    icon: Icon(Icons.payment, size: 40.0, color: ThemeColoursSeva().dkGreen,)
-                  ),
+                      landingName: "payments",
+                      icon: Icon(
+                        Icons.payment,
+                        size: 40.0,
+                        color: ThemeColoursSeva().dkGreen,
+                      )),
                 ),
               )
             ],

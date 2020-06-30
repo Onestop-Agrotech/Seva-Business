@@ -6,6 +6,7 @@ class APIService {
   static final String verifyOTP = "$_sevaApi/businesses/loginMobile/verifyOTP/";
   static final String businessProductsListAPI = "$_sevaApi/businesses/";
   static final String ordersListAPI = "$_sevaApi/orders/business/";
+  static final String businessNameAPI = "$_sevaApi/businesses/storeName/";
 
   // ORDERS
   static final String confirmOrderAPI = "$_sevaApi/orders/confirm/order";
