@@ -21,9 +21,49 @@ class _ProductcardState extends State<Productcard> {
   TextEditingController qtyVal = new TextEditingController();
   String dropdownValue;
 
+  bool _loadingEdit = false;
+
   @override
   initState() {
     super.initState();
+    dropdownValue=widget.product.quantity.quantityMetric;
+  }
+
+  _showLoaderEdit(setState) {
+    if (_loadingEdit) {
+      return CircularProgressIndicator();
+    } else {
+      return Row(
+        children: <Widget>[
+          RaisedButton(
+              textColor: Colors.white,
+              color: Colors.green,
+              onPressed: () async {
+                setState(() {
+                  _loadingEdit = true;
+                });
+                await _updateProduct();
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Edit",
+                style: TextStyle(fontSize: 20.0),
+              )),
+          SizedBox(width: 30.0),
+          RaisedButton(
+            textColor: Colors.white,
+            color: Colors.red,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Cancel",
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   _updateProduct() async {
@@ -44,7 +84,8 @@ class _ProductcardState extends State<Productcard> {
         // successfully toggled Out Of Stock
         print("success");
         setState(() {
-          widget.product.price=int.parse(price.text);
+          widget.product.price = int.parse(price.text);
+          _loadingEdit = false;
         });
         price.clear();
       } else if (response.statusCode == 404) {
@@ -67,8 +108,9 @@ class _ProductcardState extends State<Productcard> {
         // successfully toggled Out Of Stock
         print("success");
         setState(() {
-          widget.product.quantity.quantityValue=int.parse(qty.text);
-          widget.product.quantity.quantityMetric=dropdownValue;
+          widget.product.quantity.quantityValue = int.parse(qty.text);
+          widget.product.quantity.quantityMetric = dropdownValue;
+          _loadingEdit = false;
         });
         qty.clear();
       } else if (response.statusCode == 404) {
@@ -114,7 +156,7 @@ class _ProductcardState extends State<Productcard> {
           return AlertDialog(
             title: Text('Edit ${product.name}'),
             content: StatefulBuilder(builder: (context, setState) {
-              dropdownValue = widget.product.quantity.quantityMetric;
+              // dropdownValue = widget.product.quantity.quantityMetric;
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -182,29 +224,9 @@ class _ProductcardState extends State<Productcard> {
               );
             }),
             actions: <Widget>[
-              RaisedButton(
-                  textColor: Colors.white,
-                  color: Colors.green,
-                  onPressed: () async{
-                    await _updateProduct();
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Edit",
-                    style: TextStyle(fontSize: 20.0),
-                  )),
-              SizedBox(width: 30.0),
-              RaisedButton(
-                textColor: Colors.white,
-                color: Colors.red,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ),
+              StatefulBuilder(builder: (context, setState) {
+                return _showLoaderEdit(setState);
+              })
             ],
           );
         });
