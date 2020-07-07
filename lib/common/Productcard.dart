@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
@@ -22,6 +24,64 @@ class _ProductcardState extends State<Productcard> {
   @override
   initState() {
     super.initState();
+  }
+
+  _updateProduct() async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String username = await p.getUsername();
+    String token = await p.getToken();
+    String priceURL =
+        "https://api.theonestop.co.in/api/businesses/$username/product/${widget.product.name}/price";
+    String qURL =
+        "https://api.theonestop.co.in/api/businesses/$username/product/${widget.product.name}/qty";
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    if (price.text != "" && price.text != null) {
+      // update price here
+      var jBody = json.encode({"price": price.text});
+      var response =
+          await http.put(priceURL, headers: requestHeaders, body: jBody);
+      if (response.statusCode == 200) {
+        // successfully toggled Out Of Stock
+        print("success");
+        setState(() {
+          widget.product.price=int.parse(price.text);
+        });
+        price.clear();
+      } else if (response.statusCode == 404) {
+        // no business user found
+        print("404 error");
+      } else if (response.statusCode == 500) {
+        // internal server error
+        print("500 error");
+      } else {
+        // throw some error exception
+        print("some other error");
+      }
+    }
+    if (qty.text != "" && qty.text != null) {
+      // update the quantity
+      var jBody = json
+          .encode({"quantityValue": qty.text, "quantityMetric": dropdownValue});
+      var response = await http.put(qURL, headers: requestHeaders, body: jBody);
+      if (response.statusCode == 200) {
+        // successfully toggled Out Of Stock
+        print("success");
+        setState(() {
+          widget.product.quantity.quantityValue=int.parse(qty.text);
+          widget.product.quantity.quantityMetric=dropdownValue;
+        });
+        qty.clear();
+      } else if (response.statusCode == 404) {
+        // no business user found
+        print("404 error");
+      } else if (response.statusCode == 500) {
+        // internal server error
+        print("500 error");
+      } else {
+        // throw some error exception
+        print("some other error");
+      }
+    }
   }
 
   _markOutOfStock() async {
@@ -53,74 +113,80 @@ class _ProductcardState extends State<Productcard> {
         builder: (context) {
           return AlertDialog(
             title: Text('Edit ${product.name}'),
-            content: StatefulBuilder(builder: (context, setState){
-              dropdownValue=widget.product.quantity.quantityMetric;
+            content: StatefulBuilder(builder: (context, setState) {
+              dropdownValue = widget.product.quantity.quantityMetric;
               return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text("Price"),
-                    Container(
-                      width: 30.0,
-                      height: 50.0,
-                      child: TextFormField(
-                        decoration:
-                            InputDecoration(labelText: '${product.price}'),
-                        controller: price,
-                        keyboardType: TextInputType.number,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text("Price"),
+                      Container(
+                        width: 30.0,
+                        height: 50.0,
+                        child: TextFormField(
+                          decoration:
+                              InputDecoration(labelText: '${product.price}'),
+                          controller: price,
+                          keyboardType: TextInputType.number,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text("Quantity"),
-                    Container(
-                      width: 30.0,
-                      height: 50.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: '${product.quantity.quantityValue}'),
-                        controller: qty,
-                        keyboardType: TextInputType.number,
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text("Quantity"),
+                      Container(
+                        width: 30.0,
+                        height: 50.0,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: '${product.quantity.quantityValue}'),
+                          controller: qty,
+                          keyboardType: TextInputType.number,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text("Value"),
-                    DropdownButton(
-                      value: dropdownValue,
-                      items: <String>['Kg', 'Gm', 'Pc',]
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                        });
-                      },
-                    )
-                  ],
-                ),
-              ],
-            );
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text("Value"),
+                      DropdownButton(
+                        value: dropdownValue,
+                        items: <String>[
+                          'Kg',
+                          'Kgs',
+                          'Gm',
+                          'Gms',
+                          'Pc',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ],
+              );
             }),
             actions: <Widget>[
               RaisedButton(
                   textColor: Colors.white,
                   color: Colors.green,
-                  onPressed: () {
+                  onPressed: () async{
+                    await _updateProduct();
                     Navigator.pop(context);
                   },
                   child: Text(
