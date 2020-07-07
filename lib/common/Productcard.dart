@@ -70,6 +70,7 @@ class _ProductcardState extends State<Productcard> {
                         decoration:
                             InputDecoration(labelText: '${product.price}'),
                         controller: price,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ],
@@ -85,7 +86,8 @@ class _ProductcardState extends State<Productcard> {
                       child: TextFormField(
                         decoration: InputDecoration(
                             labelText: '${product.quantity.quantityValue}'),
-                        controller: price,
+                        controller: qty,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                     // TextFormField(
