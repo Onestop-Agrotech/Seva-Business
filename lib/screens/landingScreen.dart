@@ -17,7 +17,14 @@ class LandingItem {
   LandingItem({this.name, this.icon});
 }
 
-class LandingScreen extends StatelessWidget {
+class LandingScreen extends StatefulWidget {
+  @override
+  _LandingScreenState createState() => _LandingScreenState();
+}
+
+class _LandingScreenState extends State<LandingScreen> {
+  bool _switchValue = true;
+
   _getName() async {
     StorageSharedPrefs p = new StorageSharedPrefs();
     String id = await p.getId();
@@ -57,25 +64,50 @@ class LandingScreen extends StatelessWidget {
         });
   }
 
+  _switchBuilder() {
+    return Switch(
+      value: _switchValue,
+      onChanged: (val) {
+        // do something here
+        setState(() {
+          // _loaderSwitch = true;
+          _switchValue = val;
+        });
+        _showAlert();
+        // _markOutOfStock();
+      },
+      activeTrackColor: Colors.lightGreenAccent,
+      activeColor: Colors.green,
+    );
+  }
+
+  _showAlert(){
+    showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: Text("Status"),
+        content: Text("Your store is now offline"),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.person_pin),
+          onPressed: () {
+            _showLogoutOption(context);
+          },
+        ),
         title: TopText(
           txt: "Seva Cloud Store",
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.person_pin),
-            onPressed: () {
-              _showLogoutOption(context);
-            },
-          ),
-        ],
+        actions: <Widget>[_switchBuilder()],
       ),
       body: Column(
         children: <Widget>[
