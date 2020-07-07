@@ -17,13 +17,11 @@ class _ProductcardState extends State<Productcard> {
   TextEditingController price = new TextEditingController();
   TextEditingController qty = new TextEditingController();
   TextEditingController qtyVal = new TextEditingController();
+  String dropdownValue;
 
   @override
   initState() {
     super.initState();
-    // price = new TextEditingController();
-    // qty = new TextEditingController();
-    // qtyVal = new TextEditingController();
   }
 
   _markOutOfStock() async {
@@ -55,14 +53,15 @@ class _ProductcardState extends State<Productcard> {
         builder: (context) {
           return AlertDialog(
             title: Text('Edit ${product.name}'),
-            content: Column(
+            content: StatefulBuilder(builder: (context, setState){
+              dropdownValue=widget.product.quantity.quantityMetric;
+              return Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Price"),
-                    // Text("Rs ${product.price}"),
                     Container(
                       width: 30.0,
                       height: 50.0,
@@ -90,10 +89,6 @@ class _ProductcardState extends State<Productcard> {
                         keyboardType: TextInputType.number,
                       ),
                     ),
-                    // TextFormField(
-                    //   initialValue: "${product.quantity.quantityValue}",
-                    //   controller: qty,
-                    // )
                   ],
                 ),
                 SizedBox(height: 20.0),
@@ -101,10 +96,26 @@ class _ProductcardState extends State<Productcard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Value"),
+                    DropdownButton(
+                      value: dropdownValue,
+                      items: <String>['Kg', 'Gm', 'Pc',]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                        });
+                      },
+                    )
                   ],
                 ),
               ],
-            ),
+            );
+            }),
             actions: <Widget>[
               RaisedButton(
                   textColor: Colors.white,
