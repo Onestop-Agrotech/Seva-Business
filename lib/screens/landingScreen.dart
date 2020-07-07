@@ -23,7 +23,61 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
-  bool _switchValue = true;
+  bool _switchValue;
+  bool _onlineStatus;
+
+  @override
+  initState(){
+    super.initState();
+    _switchValue=false;
+    _getOnlineStatus();
+  }
+
+  _setOnlineStatus() async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String id = await p.getId();
+    String token = await p.getToken();
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    String url = APIService.businessOnline+"$id";
+    var response = await http.put(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // got online status
+      // return json.decode(response.body);
+      setState(() {
+        _onlineStatus=json.decode(response.body)["online"];
+        if(_onlineStatus)_switchValue=true;
+        else _switchValue=false;
+      });
+      
+    } else if (response.statusCode == 404) {
+      // no name
+      print("404 error");
+    } else
+      throw Exception("Server error");
+  }
+
+  _getOnlineStatus() async{
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    String id = await p.getId();
+    String token = await p.getToken();
+    Map<String, String> requestHeaders = {'x-auth-token': token};
+    String url = APIService.businessOnline+"$id";
+    var response = await http.get(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // got online status
+      // return json.decode(response.body);
+      setState(() {
+        _onlineStatus=json.decode(response.body)["online"];
+        if(_onlineStatus)_switchValue=true;
+        else _switchValue=false;
+      });
+      
+    } else if (response.statusCode == 404) {
+      // no name
+      print("404 error");
+    } else
+      throw Exception("Server error");
+  }
 
   _getName() async {
     StorageSharedPrefs p = new StorageSharedPrefs();
@@ -67,12 +121,13 @@ class _LandingScreenState extends State<LandingScreen> {
   _switchBuilder() {
     return Switch(
       value: _switchValue,
-      onChanged: (val) {
+      onChanged: (val) async{
         // do something here
         setState(() {
           // _loaderSwitch = true;
           _switchValue = val;
         });
+        await _setOnlineStatus();
         _showAlert();
         // _markOutOfStock();
       },
@@ -85,7 +140,7 @@ class _LandingScreenState extends State<LandingScreen> {
     showDialog(context: context, builder: (context){
       return AlertDialog(
         title: Text("Status"),
-        content: Text("Your store is now offline"),
+        content: Text(_onlineStatus?"Your store is now online":"Your store is now offline"),
       );
     });
   }

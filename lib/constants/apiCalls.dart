@@ -10,6 +10,7 @@ class APIService {
   static final String businessNameAPI = "$_sevaApi/businesses/storeName/";
   static final String productsTypeAPI =
       "$_sevaApi/businesses/storeProductType/";
+  static final String businessOnline = "$_sevaApi/businesses/online/";
 
   // ORDERS
   static final String confirmOrderAPI = "$_sevaApi/orders/confirm/order";
