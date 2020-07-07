@@ -14,9 +14,16 @@ class Productcard extends StatefulWidget {
 }
 
 class _ProductcardState extends State<Productcard> {
+  TextEditingController price = new TextEditingController();
+  TextEditingController qty = new TextEditingController();
+  TextEditingController qtyVal = new TextEditingController();
+
   @override
   initState() {
     super.initState();
+    // price = new TextEditingController();
+    // qty = new TextEditingController();
+    // qtyVal = new TextEditingController();
   }
 
   _markOutOfStock() async {
@@ -47,7 +54,7 @@ class _ProductcardState extends State<Productcard> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Edit Price and Quantity'),
+            title: Text('Edit ${product.name}'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -55,7 +62,16 @@ class _ProductcardState extends State<Productcard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Price"),
-                    Text("Rs ${product.price}")
+                    // Text("Rs ${product.price}"),
+                    Container(
+                      width: 30.0,
+                      height: 50.0,
+                      child: TextFormField(
+                        decoration:
+                            InputDecoration(labelText: '${product.price}'),
+                        controller: price,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 20.0),
@@ -63,7 +79,19 @@ class _ProductcardState extends State<Productcard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Quantity"),
-                    Text("${product.quantity.quantityValue}")
+                    Container(
+                      width: 30.0,
+                      height: 50.0,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            labelText: '${product.quantity.quantityValue}'),
+                        controller: price,
+                      ),
+                    ),
+                    // TextFormField(
+                    //   initialValue: "${product.quantity.quantityValue}",
+                    //   controller: qty,
+                    // )
                   ],
                 ),
                 SizedBox(height: 20.0),
@@ -71,17 +99,33 @@ class _ProductcardState extends State<Productcard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Value"),
-                    Text("${product.quantity.quantityMetric}")
                   ],
                 ),
               ],
             ),
             actions: <Widget>[
               RaisedButton(
+                  textColor: Colors.white,
+                  color: Colors.green,
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Edit")),
+                  child: Text(
+                    "Edit",
+                    style: TextStyle(fontSize: 20.0),
+                  )),
+              SizedBox(width: 30.0),
+              RaisedButton(
+                textColor: Colors.white,
+                color: Colors.red,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
             ],
           );
         });
