@@ -26,7 +26,7 @@ class _ProductcardState extends State<Productcard> {
   @override
   initState() {
     super.initState();
-    dropdownValue=widget.product.quantity.quantityMetric;
+    dropdownValue = widget.product.quantity.quantityMetric;
   }
 
   _showLoaderEdit(setState) {
@@ -99,16 +99,21 @@ class _ProductcardState extends State<Productcard> {
         print("some other error");
       }
     }
-    if (qty.text != "" && qty.text != null) {
+    if ((qty.text != "" && qty.text != null) || dropdownValue.length > 0) {
       // update the quantity
-      var jBody = json
-          .encode({"quantityValue": qty.text, "quantityMetric": dropdownValue});
+      var jBody = json.encode({
+        "quantityValue": (qty.text != "" && qty.text != null)
+            ? qty.text
+            : widget.product.quantity.quantityValue,
+        "quantityMetric": dropdownValue
+      });
       var response = await http.put(qURL, headers: requestHeaders, body: jBody);
       if (response.statusCode == 200) {
         // successfully toggled Out Of Stock
         print("success");
         setState(() {
-          widget.product.quantity.quantityValue = int.parse(qty.text);
+          if (qty.text != "" && qty.text != null)
+            widget.product.quantity.quantityValue = int.parse(qty.text);
           widget.product.quantity.quantityMetric = dropdownValue;
           _loadingEdit = false;
         });
