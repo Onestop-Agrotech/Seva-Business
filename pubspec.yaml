@@ -35,6 +35,8 @@ dependencies:
   cached_network_image: ^2.2.0+1
   # firebase messaging - notifs
   firebase_messaging: ^6.0.16
+  # firebase realtime database for storing tokens
+  cloud_firestore: ^0.13.6
 
 dev_dependencies:
   flutter_test:

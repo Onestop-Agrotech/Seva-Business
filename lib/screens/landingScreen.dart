@@ -11,6 +11,7 @@ import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LandingItem {
   final String name;
@@ -27,19 +28,36 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   bool _switchValue;
   bool _onlineStatus;
-  FirebaseMessaging _firebaseMessaging;
+  FirebaseMessaging _fcm;
 
   @override
   initState() {
     super.initState();
     _switchValue = false;
-    _firebaseMessaging = FirebaseMessaging();
+    _fcm = FirebaseMessaging();
+    _saveDeviceToken();
     _getOnlineStatus();
     initFCM();
   }
 
+    /// Get the token, save it to the database for current user
+  _saveDeviceToken() async {
+    StorageSharedPrefs p = new StorageSharedPrefs();
+    // Get the current user
+    String uid = await p.getId();
+
+    // Get the token for this device
+    String fcmToken = await _fcm.getToken();
+    if(fcmToken!=null){
+      Firestore.instance.collection('Business tokens').document('$uid').setData({
+        'token':fcmToken,
+      });
+    }
+    
+  }
+
   initFCM() {
-    _firebaseMessaging.configure(
+    _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         _serialiseAndNavigate(message);
@@ -49,7 +67,7 @@ class _LandingScreenState extends State<LandingScreen> {
         _serialiseAndNavigate(message);
       },
       onResume: (Map<String, dynamic> message) async {
-        // print("onResume: $message");
+        print("onResume: $message");
         _serialiseAndNavigate(message);
       },
     );
