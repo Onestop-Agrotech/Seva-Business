@@ -59,15 +59,13 @@ class _LandingScreenState extends State<LandingScreen> {
   initFCM() {
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
         _serialiseAndNavigate(message);
+
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
         _serialiseAndNavigate(message);
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
         _serialiseAndNavigate(message);
       },
     );
