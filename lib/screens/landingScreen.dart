@@ -42,14 +42,29 @@ class _LandingScreenState extends State<LandingScreen> {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
+        _serialiseAndNavigate(message);
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        _serialiseAndNavigate(message);
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
+        // print("onResume: $message");
+        _serialiseAndNavigate(message);
       },
     );
+  }
+
+  void _serialiseAndNavigate(Map<String, dynamic> message) {
+    var notificationData = message['data'];
+    var view = notificationData['view'];
+    if (view != null) {
+      // Navigate to the create post view
+      if (view == 'new_order') {
+        Navigator.pushNamed(context, '/orders');
+      }
+      // If there's no view it'll just open the app on the first view
+    }
   }
 
   _setOnlineStatus() async {
