@@ -40,7 +40,7 @@ class _LandingScreenState extends State<LandingScreen> {
     initFCM();
   }
 
-    /// Get the token, save it to the database for current user
+  /// Get the token, save it to the database for current user
   _saveDeviceToken() async {
     StorageSharedPrefs p = new StorageSharedPrefs();
     // Get the current user
@@ -48,19 +48,20 @@ class _LandingScreenState extends State<LandingScreen> {
 
     // Get the token for this device
     String fcmToken = await _fcm.getToken();
-    if(fcmToken!=null){
-      Firestore.instance.collection('Business tokens').document('$uid').setData({
-        'token':fcmToken,
+    if (fcmToken != null) {
+      Firestore.instance
+          .collection('Business tokens')
+          .document('$uid')
+          .setData({
+        'token': fcmToken,
       });
     }
-    
   }
 
   initFCM() {
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         _serialiseAndNavigate(message);
-
       },
       onLaunch: (Map<String, dynamic> message) async {
         _serialiseAndNavigate(message);
