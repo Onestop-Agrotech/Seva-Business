@@ -10,6 +10,8 @@ import 'package:sevaBusiness/common/topText.dart';
 import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 class LandingItem {
   final String name;
   final Icon icon;
@@ -25,12 +27,29 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   bool _switchValue;
   bool _onlineStatus;
+  FirebaseMessaging _firebaseMessaging;
 
   @override
   initState() {
     super.initState();
     _switchValue = false;
+    _firebaseMessaging = FirebaseMessaging();
     _getOnlineStatus();
+    initFCM();
+  }
+
+  initFCM() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+    );
   }
 
   _setOnlineStatus() async {
