@@ -269,6 +269,7 @@ class _ProductcardState extends State<Productcard> {
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
                     widget.product.name,
+                    overflow: TextOverflow.clip,
                     style: TextStyle(
                         fontFamily: 'Raleway',
                         fontSize: 15.0,
@@ -286,9 +287,9 @@ class _ProductcardState extends State<Productcard> {
                     widget.product.description,
                     style: TextStyle(
                         fontFamily: 'Raleway',
-                        fontSize: 10.0,
+                        fontSize: 12.0,
                         fontWeight: FontWeight.w500,
-                        color: ThemeColoursSeva().grey),
+                        color: ThemeColoursSeva().black),
                   ),
                 ),
               ],
