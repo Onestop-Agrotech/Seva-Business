@@ -143,14 +143,16 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
-          widget.order.orderStatus == "Ready" ? IconButton(
-              icon: Icon(
-                Icons.check_circle_outline,
-              ),
-              color: ThemeColoursSeva().lgGreen,
-              onPressed: () {
-                _showOTPDialog();
-              }):Container()
+          widget.order.orderStatus == "Ready"
+              ? IconButton(
+                  icon: Icon(
+                    Icons.check_circle_outline,
+                  ),
+                  color: ThemeColoursSeva().lgGreen,
+                  onPressed: () {
+                    _showOTPDialog();
+                  })
+              : Container()
         ],
       ),
       body: Column(

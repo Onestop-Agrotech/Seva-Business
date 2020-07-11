@@ -58,17 +58,19 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) => OrderMoreDetails(order: widget.order,),
-        ));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderMoreDetails(
+                order: widget.order,
+              ),
+            ));
       },
-          child: Container(
-        width: MediaQuery.of(context).size.width*0.8,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
         height: 200.0,
-        decoration: BoxDecoration(
-          border: Border.all()
-        ),
+        decoration: BoxDecoration(border: Border.all()),
         // color: Colors.red,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -85,7 +87,9 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                       color: ThemeColoursSeva().black),
                 ),
                 Text(
-                  _today==_time.day ? "Token Number ${widget.order.tokenNumber}":"",
+                  _today == _time.day
+                      ? "Token Number ${widget.order.tokenNumber}"
+                      : "",
                   style: TextStyle(
                       fontFamily: "Raleway",
                       fontSize: 17.5,
@@ -148,7 +152,8 @@ class _CustomOrdersCardState extends State<CustomOrdersCard> {
                             widget.order.orderStatus == "Processing"
                                 ? "Mark as PACKED"
                                 : "PACKED",
-                            style: TextStyle(fontSize: 12.0, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 12.0, color: Colors.black),
                           )
                         ],
                       )
