@@ -21,11 +21,11 @@ class OrderMoreDetails extends StatefulWidget {
 class _OrderMoreDetailsState extends State<OrderMoreDetails> {
   bool _loading = false;
 
-  _loader() {
+  _loader(setState) {
     if (_loading)
       return CircularProgressIndicator();
     else
-      return _showOTPField();
+      return _showOTPField(setState);
   }
 
   _confirmOrderWithOTP(otp) async {
@@ -94,49 +94,41 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
     }
   }
 
-  _showOTPField() {
+  _showOTPField(setState) {
     if (widget.order.orderStatus == "Ready") {
-      return Container(
-        color: Colors.white,
-        height: 150.0,
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 30.0),
-              child: Text(
-                "Enter OTP:",
-                style: TextStyle(
-                    fontSize: 15.0,
-                    color: ThemeColoursSeva().dkGreen,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-              child: OTPTextField(
-                length: 6,
-                width: MediaQuery.of(context).size.width,
-                fieldWidth: 30,
-                style: TextStyle(fontSize: 20),
-                textFieldAlignment: MainAxisAlignment.spaceAround,
-                fieldStyle: FieldStyle.underline,
-                onCompleted: (pin) {
-                  _confirmOrderWithOTP(pin);
-                  setState(() {
-                    _loading = true;
-                  });
-                },
-              ),
-            )
-          ],
-        ),
+      return OTPTextField(
+        length: 6,
+        width: MediaQuery.of(context).size.width,
+        fieldWidth: 30,
+        style: TextStyle(fontSize: 20),
+        textFieldAlignment: MainAxisAlignment.spaceAround,
+        fieldStyle: FieldStyle.underline,
+        onCompleted: (pin) {
+          _confirmOrderWithOTP(pin);
+          setState(() {
+            _loading = true;
+          });
+          Navigator.pop(context);
+        },
       );
     } else
       return Container();
+  }
+
+  _showOTPDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Enter OTP"),
+            content: Container(
+              height: 100.0,
+              child: Center(
+                child: _loader(setState),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -150,6 +142,16 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: <Widget>[
+          widget.order.orderStatus == "Ready" ? IconButton(
+              icon: Icon(
+                Icons.check_circle_outline,
+              ),
+              color: ThemeColoursSeva().lgGreen,
+              onPressed: () {
+                _showOTPDialog();
+              }):Container()
+        ],
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
@@ -179,8 +181,6 @@ class _OrderMoreDetailsState extends State<OrderMoreDetails> {
           ),
         ],
       ),
-      floatingActionButton: _loader(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

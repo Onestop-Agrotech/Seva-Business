@@ -61,10 +61,30 @@ class _LandingScreenState extends State<LandingScreen> {
   initFCM() {
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
-        _serialiseAndNavigate(message);
+        // _serialiseAndNavigate(message);
+        // show alert box
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("New Order!"),
+                content:
+                    Text("You have a new order from a customer. Pack it now!"),
+                actions: <Widget>[
+                  RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/orders');
+                      },
+                      color: ThemeColoursSeva().dkGreen,
+                      textColor: Colors.white,
+                      child: Text("Go")),
+                ],
+              );
+            });
       },
       onLaunch: (Map<String, dynamic> message) async {
-        _serialiseAndNavigate(message);
+        // _serialiseAndNavigate(message);
       },
       onResume: (Map<String, dynamic> message) async {
         _serialiseAndNavigate(message);
@@ -228,12 +248,18 @@ class _LandingScreenState extends State<LandingScreen> {
             future: _getName(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text("${snapshot.data}",
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        color: ThemeColoursSeva().black,
-                        fontWeight: FontWeight.normal),
-                    overflow: TextOverflow.ellipsis);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Text("${snapshot.data}",
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: ThemeColoursSeva().black,
+                            fontWeight: FontWeight.normal),
+                        overflow: TextOverflow.clip),
+                  ),
+                );
               } else
                 return Container();
             },

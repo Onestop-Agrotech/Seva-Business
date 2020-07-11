@@ -12,6 +12,9 @@ class LandingCard extends StatelessWidget {
           Navigator.pushNamed(context, '/$landingName');
         },
         child: Container(
+          decoration: BoxDecoration(
+            border: Border.all()
+          ),
           width: MediaQuery.of(context).size.width * 0.4,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
