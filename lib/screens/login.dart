@@ -51,7 +51,7 @@ class _SigninState extends State<Signin> {
           if (_start == 0) {
             timer.cancel();
             setState(() {
-              showOTPField=false;
+              showOTPField = false;
             });
           } else {
             _start = _start - 1;
@@ -75,9 +75,9 @@ class _SigninState extends State<Signin> {
     } else
       return showOTPField
           ? Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Text("Resend OTP in $_start seconds"),
-          )
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Text("Resend OTP in $_start seconds"),
+            )
           : Container(
               child: RaisedButton(
               color: ThemeColoursSeva().dkGreen,
