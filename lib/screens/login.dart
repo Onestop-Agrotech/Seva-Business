@@ -21,7 +21,6 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   Timer _timer;
   int _start;
-  bool _timeUp;
   bool showOTPField = false;
   bool _loading = false;
   bool _inavlidMobile = false;
@@ -34,8 +33,6 @@ class _SigninState extends State<Signin> {
   @override
   void initState() {
     super.initState();
-    _timeUp = false;
-    _start = 60;
   }
 
   @override
@@ -51,8 +48,11 @@ class _SigninState extends State<Signin> {
       oneSec,
       (Timer timer) => setState(
         () {
-          if (_start < 1) {
+          if (_start == 0) {
             timer.cancel();
+            setState(() {
+              showOTPField=false;
+            });
           } else {
             _start = _start - 1;
           }
@@ -74,7 +74,10 @@ class _SigninState extends State<Signin> {
       return CircularProgressIndicator();
     } else
       return showOTPField
-          ? Container()
+          ? Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Text("Resend OTP in $_start seconds"),
+          )
           : Container(
               child: RaisedButton(
               color: ThemeColoursSeva().dkGreen,
@@ -134,7 +137,6 @@ class _SigninState extends State<Signin> {
       StorageSharedPrefs p = new StorageSharedPrefs();
       await p.setToken(token);
       setState(() {
-        _timeUp = false;
         _loading = false;
         showOTPField = true;
       });
@@ -180,63 +182,6 @@ class _SigninState extends State<Signin> {
     } else if (response.statusCode == 500) {
       // internal server error
     }
-  }
-
-  _resendOTPButton() {
-    // return Future.delayed(Duration(seconds: 5), () {
-    if (showOTPField) {
-      return FutureBuilder(
-          future: Future.delayed(Duration(seconds: 60), () {
-            setState(() {
-              _timeUp = true;
-            });
-          }),
-          builder: (context, snapshot) {
-            if (_timeUp == true) {
-              return Container(
-                  child: RaisedButton(
-                color: ThemeColoursSeva().dkGreen,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                ),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    _mobileFocus.unfocus();
-                    setState(() {
-                      _timeUp = false;
-                      _loading = true;
-                      _inavlidMobile = false;
-                      showOTPField = false;
-                    });
-                    // Here submit the form
-                    await _verifyMobile();
-                  }
-                },
-                child: const Text('Resend OTP',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontFamily: "Raleway",
-                    )),
-              ));
-            } else if (_timeUp == false) {
-              return Container(
-                child: Center(
-                  child: Text(
-                    "Resend OTP in $_start seconds",
-                    style: TextStyle(
-                        fontSize: 14.0, color: ThemeColoursSeva().black),
-                  ),
-                ),
-              );
-            } else {
-              return Container();
-            }
-          });
-    } else
-      return Container();
-    // });
-    // return Container();
   }
 
   @override
@@ -394,7 +339,6 @@ class _SigninState extends State<Signin> {
                   _showOTPLoader(),
                   _showLoader(),
                   SizedBox(height: 20.0),
-                  _resendOTPButton(),
                 ],
               ),
             ),
