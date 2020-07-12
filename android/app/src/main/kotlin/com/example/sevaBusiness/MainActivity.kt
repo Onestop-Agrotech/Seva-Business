@@ -1,4 +1,4 @@
-package com.example.sevaBusiness
+package com.onestop.sevaBusiness
 
 import io.flutter.embedding.android.FlutterActivity
 
