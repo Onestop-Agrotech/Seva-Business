@@ -1,5 +1,5 @@
-# Seva Business APP
-A MVP for vendors to order Fruits/Vegetables easily.
+# Seva Business App ![CI](https://github.com/Onestop-Agrotech/Seva-Business/workflows/CI/badge.svg)	
+A MVP for vendors and retailors to order Fruits/Vegetables easily.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -22,5 +22,19 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 
 ## Contributing
-Please read [CONTRIBUTING.md](will be added) for details on our code of conduct, and the process for submitting pull requests to us.
+The Seva is built by the community for the community. We welcome contributions from each and everyone, especially new contributors.
+```
+* Developers: chekout the [wiki](https://www.wiki.com) page for instructions on how to set things up and commit changes.
+* All other contributors: please see our general [contributor] guidelines.
+```
+
+## Support.
+For any type of security issues please report directly to info@theonestop.co.in.
+
+## Connect with us
+```
+* Instagram
+* Facebook
+
+```
 
