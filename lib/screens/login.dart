@@ -314,7 +314,7 @@ class _SigninState extends State<Signin> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 40, right: 100),
+                                  const EdgeInsets.only(left: 40, right: 90),
                               child: OTPTextField(
                                 length: 6,
                                 width: MediaQuery.of(context).size.width,
