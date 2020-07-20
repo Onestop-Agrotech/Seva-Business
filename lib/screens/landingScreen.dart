@@ -186,7 +186,7 @@ class _LandingScreenState extends State<LandingScreen> {
         builder: (context) {
           return AlertDialog(
             title: Text('Logout from App'),
-            content: Text('You will not be shown to customers.'),
+            content: Text('You have to login again!.'),
             actions: <Widget>[
               RaisedButton(
                   onPressed: () async {
