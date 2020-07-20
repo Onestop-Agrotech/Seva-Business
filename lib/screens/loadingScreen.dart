@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:sevaBusiness/classes/storage_sharedPrefs.dart';
@@ -12,10 +13,27 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  String _showText;
   @override
   initState() {
     super.initState();
-    __checkForUserToken();
+    _showText = "Setting Up ...";
+    _checkConnection();
+  }
+
+  _checkConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+        __checkForUserToken();
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      setState(() {
+        _showText = "Oops! No internet connection.";
+      });
+    }
   }
 
   _sendReqToServer(token) async {
@@ -54,10 +72,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return Scaffold(
       body: Container(
         child: Center(
-          child: CircularProgressIndicator(
-            backgroundColor: ThemeColoursSeva().black,
-            strokeWidth: 4.0,
-            valueColor: AlwaysStoppedAnimation<Color>(ThemeColoursSeva().grey),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              _showText,
+              style: TextStyle(
+                  color: ThemeColoursSeva().dkGreen,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ),

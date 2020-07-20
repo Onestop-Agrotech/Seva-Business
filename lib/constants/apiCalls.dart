@@ -15,6 +15,9 @@ class APIService {
   // ORDERS
   static final String confirmOrderAPI = "$_sevaApi/orders/confirm/order";
 
+  // Firebase
+  static final String setDeviceTokenInFirestore = "$_sevaApi/firestore/businesssettoken";
+
   // OTHERS
   // loading.dart - _sendReqToServer function
   static final String mainTokenAPI = "https://api.theonestop.co.in/token";

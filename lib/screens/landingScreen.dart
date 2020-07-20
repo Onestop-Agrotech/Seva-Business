@@ -11,7 +11,7 @@ import 'package:sevaBusiness/constants/themeColors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LandingItem {
   final String name;
@@ -40,21 +40,32 @@ class _LandingScreenState extends State<LandingScreen> {
     initFCM();
   }
 
-  /// Get the token, save it to the database for current user
+  /// Get the token, save it to firestore for current user
   _saveDeviceToken() async {
     StorageSharedPrefs p = new StorageSharedPrefs();
     // Get the current user
+    String jwt = await p.getToken();
     String uid = await p.getId();
 
     // Get the token for this device
     String fcmToken = await _fcm.getToken();
     if (fcmToken != null) {
-      Firestore.instance
-          .collection('Business tokens')
-          .document('$uid')
-          .setData({
-        'token': fcmToken,
-      });
+      // Send a post request here to the server to set token
+      var getJson = json.encode(
+          {"token": fcmToken, "collection": "Business tokens", "userId": uid});
+      String url = APIService.setDeviceTokenInFirestore;
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "x-auth-token": "$jwt"
+      };
+      var response = await http.post(url, body: getJson, headers: headers);
+      if (response.statusCode == 200) {
+        // saved device to token
+        print("saved token");
+      } else {
+        // some error
+        print("some error");
+      }
     }
   }
 

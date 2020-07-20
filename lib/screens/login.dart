@@ -231,7 +231,7 @@ class _SigninState extends State<Signin> {
                   ),
                   SizedBox(width: 10.0),
                   Text(
-                    "B",
+                    "P",
                     style: TextStyle(
                       fontSize: 40.0,
                       color: ThemeColoursSeva().lgGreen,
@@ -239,7 +239,7 @@ class _SigninState extends State<Signin> {
                       fontFamily: "Raleway",
                     ),
                   ),
-                  Text("usiness",
+                  Text("artner",
                       style: TextStyle(
                         fontSize: 30.0,
                         color: ThemeColoursSeva().lgGreen,
